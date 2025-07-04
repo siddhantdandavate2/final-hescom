@@ -50,7 +50,8 @@ export const formatDate = (date: Date | string, languageCode: string, options?: 
     day: 'numeric'
   };
   
-  return new Intl.DateTimeFormat(locale, { ...defaultOptions, ...options }).format(dateObj);
+  const finalOptions = { ...defaultOptions, ...(options || {}) };
+  return new Intl.DateTimeFormat(locale, finalOptions).format(dateObj);
 };
 
 // Format relative time (e.g., "2 hours ago")
