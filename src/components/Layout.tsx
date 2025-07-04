@@ -6,6 +6,7 @@ import EnhancedNavbar from './EnhancedNavbar';
 import Chatbot from './Chatbot';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalization } from '@/utils/localization';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { user } = useAuth();
   const { t } = useLanguage();
+  const { formatDate } = useLocalization();
 
   return (
     <SidebarProvider>
@@ -45,7 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </div>
             </header>
             
-            <div className="flex-1 p-6 bg-gray-50">
+                <p className="text-sm text-gray-600">{t('dashboard.welcome')}, {user?.name}</p>
               {children}
             </div>
           </main>

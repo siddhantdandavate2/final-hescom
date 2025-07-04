@@ -35,6 +35,15 @@
   },
   "dashboard": {
     "welcome": "MSEFC पोर्टल में आपका स्वागत है",
+    "departmentHead": "विभाग प्रमुख डैशबोर्ड",
+    "stateWideAnalytics": "राज्य-व्यापी विश्लेषण और रणनीतिक अंतर्दृष्टि",
+    "liveData": "लाइव डेटा",
+    "lastUpdated": "अंतिम अपडेट",
+    "allZones": "सभी क्षेत्र",
+    "overview": "अवलोकन",
+    "fraudAnalytics": "धोखाधड़ी विश्लेषण",
+    "aiForecast": "AI पूर्वानुमान",
+    "liveAlerts": "लाइव अलर्ट",
     "totalTheftCases": "कुल चोरी के मामले",
     "resolutionRate": "समाधान दर",
     "revenueRecovered": "राजस्व वसूली",
@@ -52,6 +61,16 @@
     "threatLevel": "खतरे का स्तर",
     "predictedTheft": "अनुमानित चोरी के मामले",
     "aiForecasting": "AI पूर्वानुमान - अगले 6 महीने"
+  },
+  "zones": {
+    "bengaluru": "बेंगलुरु",
+    "mysuru": "मैसूर",
+    "hubli": "हुबली-धारवाड़",
+    "mangalore": "मंगलौर",
+    "belagavi": "बेलगावी",
+    "gulbarga": "गुलबर्गा",
+    "davangere": "दावणगेरे",
+    "ballari": "बल्लारी"
   },
   "bills": {
     "currentBill": "वर्तमान बिल",

@@ -79,11 +79,11 @@ const EnhancedNavbar = () => {
           <div className="hidden md:flex items-center space-x-4 bg-red-500/30 px-4 py-2 rounded-full">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span className="text-sm">{t('common.loading')}</span>
+              <span className="text-sm">{t('dashboard.liveData')}</span>
             </div>
             <div className="flex items-center space-x-1 text-xs opacity-90">
               <Clock className="h-3 w-3" />
-              <span>{formatDate(lastUpdate)}</span>
+              <span>{formatDate(lastUpdate, { hour: '2-digit', minute: '2-digit' })}</span>
             </div>
           </div>
 

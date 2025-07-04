@@ -75,7 +75,7 @@ const DepartmentHeadDashboard = () => {
           value={currentZoneData.powerTheft}
           icon={AlertTriangle}
           trend="up"
-          trendValue="12% vs last month"
+          trendValue={`12% ${t('dashboard.vsLastMonth')}`}
           className="kpi-update border-l-4 border-l-red-500"
         />
         <KPICard
@@ -91,7 +91,7 @@ const DepartmentHeadDashboard = () => {
           value={formatPercentage(Math.round((fraudData.stats.resolvedCases / fraudData.stats.totalCases) * 100))}
           icon={ShieldCheck}
           trend="up"
-          trendValue="5% improvement"
+          trendValue={`5% ${t('dashboard.improvement')}`}
           className="border-l-4 border-l-green-500"
         />
         <KPICard
@@ -99,7 +99,7 @@ const DepartmentHeadDashboard = () => {
           value={formatCurrency(fraudData.stats.totalAmountInvolved)}
           icon={DollarSign}
           trend="up"
-          trendValue={formatCurrency(240000) + " this month"}
+          trendValue={`${formatCurrency(240000)} ${t('dashboard.thisMonth')}`}
           className="border-l-4 border-l-blue-500"
           type="currency"
         />
@@ -108,7 +108,7 @@ const DepartmentHeadDashboard = () => {
           value={formatPercentage(Math.round((fraudData.stats.aiDetectedCases / fraudData.stats.totalCases) * 100))}
           icon={Brain}
           trend="stable"
-          trendValue="AI Enhanced"
+          trendValue={t('dashboard.aiEnhanced')}
           className="border-l-4 border-l-purple-500"
           type="percentage"
         />
@@ -117,7 +117,7 @@ const DepartmentHeadDashboard = () => {
           value={formatNumber(fraudData.stats.highSeverityCases)}
           icon={ShieldAlert}
           trend="down"
-          trendValue="2 resolved today"
+          trendValue={`2 ${t('dashboard.resolvedToday')}`}
           className="border-l-4 border-l-red-500"
         />
       </div>
