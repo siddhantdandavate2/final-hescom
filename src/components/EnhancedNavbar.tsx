@@ -83,7 +83,7 @@ const EnhancedNavbar = () => {
             </div>
             <div className="flex items-center space-x-1 text-xs opacity-90">
               <Clock className="h-3 w-3" />
-              <span>{formatDate(lastUpdate, { timeStyle: 'short' })}</span>
+              <span>{formatDate(lastUpdate)}</span>
             </div>
           </div>
 

@@ -38,7 +38,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             <div className="flex items-center space-x-2">
               <Clock className="h-4 w-4" />
               <span className="text-sm">
-                {t('common.loading')}: {formatDate(new Date(), { timeStyle: 'medium' })}
+                {t('common.loading')}: {formatDate(new Date())}
               </span>
             </div>
           </div>

@@ -23,14 +23,14 @@ export const getLocaleForLanguage = (languageCode: string): string => {
 };
 
 // Format numbers according to locale
-export const formatNumber = (number: number, languageCode: string): string => {
-  const locale = getLocaleForLanguage(languageCode);
+export const formatNumber = (number: number, languageCode?: string): string => {
+  const locale = getLocaleForLanguage(languageCode || 'en');
   return new Intl.NumberFormat(locale).format(number);
 };
 
 // Format currency according to locale
-export const formatCurrency = (amount: number, languageCode: string): string => {
-  const locale = getLocaleForLanguage(languageCode);
+export const formatCurrency = (amount: number, languageCode?: string): string => {
+  const locale = getLocaleForLanguage(languageCode || 'en');
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'INR',
@@ -40,8 +40,8 @@ export const formatCurrency = (amount: number, languageCode: string): string => 
 };
 
 // Format date according to locale
-export const formatDate = (date: Date | string, languageCode: string, options?: Intl.DateTimeFormatOptions): string => {
-  const locale = getLocaleForLanguage(languageCode);
+export const formatDate = (date: Date | string, options?: Intl.DateTimeFormatOptions, languageCode?: string): string => {
+  const locale = getLocaleForLanguage(languageCode || 'en');
   const dateObj = typeof date === 'string' ? new Date(date) : date;
   
   let finalOptions: Intl.DateTimeFormatOptions;
@@ -64,8 +64,8 @@ export const formatDate = (date: Date | string, languageCode: string, options?: 
 };
 
 // Format relative time (e.g., "2 hours ago")
-export const formatRelativeTime = (date: Date | string, languageCode: string): string => {
-  const locale = getLocaleForLanguage(languageCode);
+export const formatRelativeTime = (date: Date | string, languageCode?: string): string => {
+  const locale = getLocaleForLanguage(languageCode || 'en');
   const dateObj = typeof date === 'string' ? new Date(date) : date;
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - dateObj.getTime()) / 1000);
@@ -88,8 +88,8 @@ export const formatRelativeTime = (date: Date | string, languageCode: string): s
 };
 
 // Format percentage
-export const formatPercentage = (value: number, languageCode: string): string => {
-  const locale = getLocaleForLanguage(languageCode);
+export const formatPercentage = (value: number, languageCode?: string): string => {
+  const locale = getLocaleForLanguage(languageCode || 'en');
   return new Intl.NumberFormat(locale, {
     style: 'percent',
     minimumFractionDigits: 0,
@@ -106,7 +106,7 @@ export const useLocalization = () => {
     formatNumber: (number: number) => formatNumber(number, currentLanguage),
     formatCurrency: (amount: number) => formatCurrency(amount, currentLanguage),
     formatDate: (date: Date | string, options?: Intl.DateTimeFormatOptions) => 
-      formatDate(date, currentLanguage, options),
+      formatDate(date, options, currentLanguage),
     formatRelativeTime: (date: Date | string) => formatRelativeTime(date, currentLanguage),
     formatPercentage: (value: number) => formatPercentage(value, currentLanguage),
     currentLanguage,
