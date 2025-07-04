@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
@@ -13,6 +13,8 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   message = 'Loading...', 
   fullScreen = false 
 }) => {
+  const { currentLanguage } = useLanguage();
+  
   const sizeClasses = {
     sm: 'w-4 h-4',
     md: 'w-8 h-8',
