@@ -259,9 +259,9 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               ))}
               
-              <SidebarMenuItem>
+                  <NavLink to={item.url} className={getNavCls}>
                 <SidebarMenuButton onClick={logout} className="text-red-600 hover:bg-red-50 transition-colors">
-                  <LogOut className="mr-2 h-4 w-4" />
+                    {!isCollapsed && <span>{item.title === 'dashboard' ? "Dashboard" : t(item.title)}</span>}
                   {!isCollapsed && <span>{t('logout')}</span>}
                 </SidebarMenuButton>
               </SidebarMenuItem>
