@@ -47,7 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </div>
             </header>
             
-                <p className="text-sm text-gray-600">{t('dashboard.welcome')}, {user?.name}</p>
+            <div className="flex-1 p-6 overflow-auto">
               {children}
             </div>
           </main>
