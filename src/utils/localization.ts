@@ -1,34 +1,24 @@
 import { useTranslation } from 'react-i18next';
 
-// Language configuration
+// Language configuration - ONLY English and Kannada
 export const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸', locale: 'en-US' },
-  { code: 'kn', name: 'ಕನ್ನಡ (Kannada)', flag: '🇮🇳', locale: 'kn-IN' },
-  { code: 'hi', name: 'हिंदी (Hindi)', flag: '🇮🇳', locale: 'hi-IN' },
-  { code: 'ta', name: 'தமிழ் (Tamil)', flag: '🇮🇳', locale: 'ta-IN' },
-  { code: 'te', name: 'తెలుగు (Telugu)', flag: '🇮🇳', locale: 'te-IN' },
-  { code: 'ml', name: 'മലയാളം (Malayalam)', flag: '🇮🇳', locale: 'ml-IN' },
-  { code: 'gu', name: 'ગુજરાતી (Gujarati)', flag: '🇮🇳', locale: 'gu-IN' },
-  { code: 'mr', name: 'मराठी (Marathi)', flag: '🇮🇳', locale: 'mr-IN' },
-  { code: 'bn', name: 'বাংলা (Bengali)', flag: '🇮🇳', locale: 'bn-IN' },
-  { code: 'pa', name: 'ਪੰਜਾਬੀ (Punjabi)', flag: '🇮🇳', locale: 'pa-IN' },
-  { code: 'or', name: 'ଓଡ଼ିଆ (Odia)', flag: '🇮🇳', locale: 'or-IN' },
-  { code: 'as', name: 'অসমীয়া (Assamese)', flag: '🇮🇳', locale: 'as-IN' }
+  { code: 'en', name: 'English', flag: '🇺🇸', locale: 'en-IN' },
+  { code: 'kn', name: 'ಕನ್ನಡ (Kannada)', flag: '🇮🇳', locale: 'kn-IN' }
 ];
 
 // Get locale for current language
 export const getLocaleForLanguage = (languageCode: string): string => {
   const language = languages.find(lang => lang.code === languageCode);
-  return language?.locale || 'en-US';
+  return language?.locale || 'en-IN';
 };
 
-// Format numbers according to locale
+// Format numbers according to Indian locale
 export const formatNumber = (number: number, languageCode?: string): string => {
   const locale = getLocaleForLanguage(languageCode || 'en');
   return new Intl.NumberFormat(locale).format(number);
 };
 
-// Format currency according to locale
+// Format currency according to Indian locale - ALWAYS INR
 export const formatCurrency = (amount: number, languageCode?: string): string => {
   const locale = getLocaleForLanguage(languageCode || 'en');
   return new Intl.NumberFormat(locale, {

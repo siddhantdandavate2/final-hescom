@@ -66,16 +66,7 @@
     "resolvedToday": "resolved today",
     "predictedTheft": "Predicted Theft Cases",
     "aiForecasting": "AI Forecasting - Next 6 Months",
-    "departmentHead": "Department Head Dashboard",
-    "stateWideAnalytics": "State-wide analytics and strategic insights",
-    "liveData": "Live Data",
-    "currentLanguage": "en",
-    "lastUpdated": "Last updated",
-    "allZones": "All Zones",
-    "overview": "Overview",
-    "fraudAnalytics": "Fraud Analytics",
-    "aiForecast": "AI Forecast",
-    "liveAlerts": "Live Alerts"
+    "currentLanguage": "en"
   },
   "zones": {
     "bengaluru": "Bengaluru",
@@ -161,6 +152,7 @@
     "theme": "Theme"
   },
   "notifications": {
+    "notifications": "Notifications",
     "billDue": "Bill Due",
     "complaintResolved": "Complaint Resolved",
     "systemMaintenance": "System Maintenance",
