@@ -35,7 +35,7 @@ const AppContent = () => {
           <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-white font-bold text-xl">M</span>
           </div>
-          <p className="text-gray-600">Loading MSEFC...</p>
+          <p className="text-gray-600">Loading HESCOM...</p>
         </div>
       </div>
     );
