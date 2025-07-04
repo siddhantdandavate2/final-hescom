@@ -44,13 +44,22 @@ export const formatDate = (date: Date | string, languageCode: string, options?: 
   const locale = getLocaleForLanguage(languageCode);
   const dateObj = typeof date === 'string' ? new Date(date) : date;
   
-  const defaultOptions: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  };
+  let finalOptions: Intl.DateTimeFormatOptions;
   
-  const finalOptions = { ...defaultOptions, ...(options || {}) };
+  if (options && (options.timeStyle || options.dateStyle)) {
+    // If timeStyle or dateStyle are provided, use only the provided options
+    // as they cannot be combined with individual date/time components
+    finalOptions = options;
+  } else {
+    // Use default options and merge with any other provided options
+    const defaultOptions: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+    finalOptions = { ...defaultOptions, ...(options || {}) };
+  }
+  
   return new Intl.DateTimeFormat(locale, finalOptions).format(dateObj);
 };
 
