@@ -92,7 +92,7 @@ export function AppSidebar() {
   };
 
   const accountMenuItems: MenuItem[] = [
-    { title: t('profile'), url: '/profile', icon: User, roles: ['consumer', 'site_engineer', 'department_head'] },
+    { title: "Profile", url: '/profile', icon: User, roles: ['consumer', 'site_engineer', 'department_head'] },
     { title: t('settings'), url: '/settings', icon: Settings, roles: ['consumer', 'site_engineer', 'department_head'] },
   ];
 
