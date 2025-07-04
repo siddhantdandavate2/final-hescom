@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const LoginForm = () => {
   const [mobile, setMobile] = useState('');
@@ -14,6 +15,7 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const { toast } = useToast();
+  const { currentLanguage } = useLanguage();
 
   const handleSendOtp = async () => {
     if (mobile.length !== 10) {
