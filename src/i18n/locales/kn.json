@@ -34,7 +34,7 @@
     "logout": "ಲಾಗ್‌ಔಟ್"
   },
   "dashboard": {
-    "welcome": "MSEFC ಪೋರ್ಟಲ್‌ಗೆ ಸ್ವಾಗತ",
+    "welcome": "HESCOM ಪೋರ್ಟಲ್‌ಗೆ ಸ್ವಾಗತ",
     "departmentHead": "ಇಲಾಖಾ ಮುಖ್ಯಸ್ಥರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
     "stateWideAnalytics": "ರಾಜ್ಯವ್ಯಾಪಿ ವಿಶ್ಲೇಷಣೆ ಮತ್ತು ತಂತ್ರಾತ್ಮಕ ಒಳನೋಟಗಳು",
     "liveData": "ಲೈವ್ ಡೇಟಾ",
@@ -69,6 +69,7 @@
     "departmentHead": "ಇಲಾಖಾ ಮುಖ್ಯಸ್ಥರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
     "stateWideAnalytics": "ರಾಜ್ಯವ್ಯಾಪಿ ವಿಶ್ಲೇಷಣೆ ಮತ್ತು ತಂತ್ರಾತ್ಮಕ ಒಳನೋಟಗಳು",
     "liveData": "ಲೈವ್ ಡೇಟಾ",
+    "currentLanguage": "kn"
     "lastUpdated": "ಕೊನೆಯದಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ",
     "allZones": "ಎಲ್ಲಾ ವಲಯಗಳು",
     "overview": "ಅವಲೋಕನ",

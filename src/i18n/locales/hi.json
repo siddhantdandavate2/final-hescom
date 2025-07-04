@@ -34,7 +34,7 @@
     "logout": "लॉगआउट"
   },
   "dashboard": {
-    "welcome": "MSEFC पोर्टल में आपका स्वागत है",
+    "welcome": "HESCOM पोर्टल में आपका स्वागत है",
     "departmentHead": "विभाग प्रमुख डैशबोर्ड",
     "stateWideAnalytics": "राज्य-व्यापी विश्लेषण और रणनीतिक अंतर्दृष्टि",
     "liveData": "लाइव डेटा",
@@ -69,6 +69,7 @@
     "departmentHead": "विभाग प्रमुख डैशबोर्ड",
     "stateWideAnalytics": "राज्य-व्यापी विश्लेषण और रणनीतिक अंतर्दृष्टि",
     "liveData": "लाइव डेटा",
+    "currentLanguage": "hi"
     "lastUpdated": "अंतिम अपडेट",
     "allZones": "सभी क्षेत्र",
     "overview": "अवलोकन",

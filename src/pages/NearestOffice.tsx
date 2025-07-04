@@ -90,7 +90,7 @@ const NearestOffice = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Nearest MSEFC Offices</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Nearest HESCOM Offices</h1>
         <p className="text-gray-600">Find electricity board offices near you</p>
       </div>
 
@@ -220,7 +220,7 @@ const NearestOffice = () => {
             <div className="text-center">
               <Mail className="h-8 w-8 text-red-600 mx-auto mb-2" />
               <p className="font-semibold">Email Support</p>
-              <p className="text-sm text-red-600">support@msefc.kar.gov.in</p>
+              <p className="text-sm text-red-600">support@hescom.kar.gov.in</p>
             </div>
           </div>
         </CardContent>

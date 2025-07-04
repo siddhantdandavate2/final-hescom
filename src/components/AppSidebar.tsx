@@ -119,11 +119,15 @@ export function AppSidebar() {
         <div className="p-4 border-b">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold">M</span>
+              {t('currentLanguage') === 'kn' ? (
+                <img src="/WhatsApp Image 2025-07-04 at 3.04.30 PM.jpeg" alt="HESCOM Logo" className="h-8 w-8" />
+              ) : (
+                <img src="/WhatsApp Image 2025-07-04 at 3.04.29 PM.jpeg" alt="HESCOM Logo" className="h-8 w-8" />
+              )}
             </div>
             {!isCollapsed && (
               <div>
-                <h2 className="font-bold text-red-700">MSEFC</h2>
+                <h2 className="font-bold text-red-700">HESCOM</h2>
                 <p className="text-xs text-gray-600">Karnataka</p>
               </div>
             )}

@@ -245,7 +245,7 @@ const Chatbot = () => {
     setIsProcessing(true);
     setTimeout(() => {
       const billContent = `
-MSEFC ELECTRICITY BILL
+HESCOM ELECTRICITY BILL
 ======================
 ${t('profile.fullName')}: ${user?.name}
 ${t('fraud.consumerNumber')}: ${user?.consumerNumber}
@@ -354,7 +354,7 @@ ${t('bills.totalAmount')}: ${formatCurrency(2450)}
                 <MessageCircle className="h-5 w-5 text-red-600" />
               </div>
               <div>
-                <CardTitle className="text-lg font-bold">MSEFC Assistant</CardTitle>
+                <CardTitle className="text-lg font-bold">HESCOM Assistant</CardTitle>
                 <p className="text-sm opacity-90">AI-Powered Smart Help</p>
               </div>
             </div>

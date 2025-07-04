@@ -66,11 +66,15 @@ const EnhancedNavbar = () => {
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <span className="text-red-600 font-bold text-lg">M</span>
+                {currentLanguage === 'kn' ? (
+                  <img src="/WhatsApp Image 2025-07-04 at 3.04.30 PM.jpeg" alt="HESCOM Logo" className="h-8 w-8" />
+                ) : (
+                  <img src="/WhatsApp Image 2025-07-04 at 3.04.29 PM.jpeg" alt="HESCOM Logo" className="h-8 w-8" />
+                )}
               </div>
               <div>
-                <h1 className="text-xl font-bold">MSEFC</h1>
-                <p className="text-xs opacity-90">Mahiti Sampanna Electricity Facility</p>
+                <h1 className="text-xl font-bold">HESCOM</h1>
+                <p className="text-xs opacity-90">Hubli Electricity Supply Company</p>
               </div>
             </div>
           </div>

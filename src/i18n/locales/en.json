@@ -34,7 +34,7 @@
     "logout": "Logout"
   },
   "dashboard": {
-    "welcome": "Welcome to MSEFC Portal",
+    "welcome": "Welcome to HESCOM Portal",
     "departmentHead": "Department Head Dashboard",
     "stateWideAnalytics": "State-wide analytics and strategic insights",
     "liveData": "Live Data",
@@ -69,6 +69,7 @@
     "departmentHead": "Department Head Dashboard",
     "stateWideAnalytics": "State-wide analytics and strategic insights",
     "liveData": "Live Data",
+    "currentLanguage": "en"
     "lastUpdated": "Last updated",
     "allZones": "All Zones",
     "overview": "Overview",

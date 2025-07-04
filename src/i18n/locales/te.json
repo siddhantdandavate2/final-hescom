@@ -34,7 +34,7 @@
     "logout": "లాగ్ అవుట్"
   },
   "dashboard": {
-    "welcome": "MSEFC పోర్టల్‌కు స్వాగతం",
+    "welcome": "HESCOM పోర్టల్‌కు స్వాగతం",
     "totalTheftCases": "మొత్తం దొంగతనం కేసులు",
     "resolutionRate": "పరిష్కార రేటు",
     "revenueRecovered": "ఆదాయం వసూలు",
@@ -51,7 +51,8 @@
     "confidenceScore": "విశ్వాస స్కోర్",
     "threatLevel": "ముప్పు స్థాయి",
     "predictedTheft": "అంచనా దొంగతనం కేసులు",
-    "aiForecasting": "AI అంచనా - తదుపరి 6 నెలలు"
+    "aiForecasting": "AI అంచనా - తదుపరి 6 నెలలు",
+    "currentLanguage": "te"
   },
   "bills": {
     "currentBill": "ప్రస్తుత బిల్",

@@ -56,11 +56,15 @@ const LoginForm = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-bold text-xl">M</span>
+            {currentLanguage === 'kn' ? (
+              <img src="/WhatsApp Image 2025-07-04 at 3.04.30 PM.jpeg" alt="HESCOM Logo" className="h-12 w-12" />
+            ) : (
+              <img src="/WhatsApp Image 2025-07-04 at 3.04.29 PM.jpeg" alt="HESCOM Logo" className="h-12 w-12" />
+            )}
           </div>
-          <CardTitle className="text-2xl font-bold text-red-700">MSEFC</CardTitle>
+          <CardTitle className="text-2xl font-bold text-red-700">HESCOM</CardTitle>
           <CardDescription>
-            Mahiti Sampanna Electricity Facility for Citizens
+            Hubli Electricity Supply Company Limited
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

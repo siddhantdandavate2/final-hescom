@@ -16,6 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { user } = useAuth();
   const { t } = useLanguage();
   const { formatDate } = useLocalization();
+  const currentLanguage = t('currentLanguage');
 
   return (
     <SidebarProvider>

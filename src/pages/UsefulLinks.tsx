@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -206,7 +205,7 @@ const UsefulLinks = () => {
         },
         {
           name: "Contact Support",
-          url: "mailto:support@msefc.kar.gov.in",
+          url: "mailto:support@hescom.kar.gov.in",
           description: "Email support for technical issues",
           type: "website"
         }

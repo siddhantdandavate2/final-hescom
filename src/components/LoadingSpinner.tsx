@@ -27,8 +27,13 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
     <div className={containerClasses}>
       <div className="text-center">
         <div className="relative">
-          <div className={`${sizeClasses[size]} border-4 border-gray-200 border-t-red-600 rounded-full animate-spin`}></div>
-          <div className={`${sizeClasses[size]} border-4 border-transparent border-t-red-400 rounded-full animate-spin absolute top-0 left-0`} style={{ animationDelay: '0.15s' }}></div>
+          <div className="w-16 h-16 mx-auto mb-4">
+            {currentLanguage === 'kn' ? (
+              <img src="/WhatsApp Image 2025-07-04 at 3.04.30 PM.jpeg" alt="HESCOM Logo" className="h-full w-full" />
+            ) : (
+              <img src="/WhatsApp Image 2025-07-04 at 3.04.29 PM.jpeg" alt="HESCOM Logo" className="h-full w-full" />
+            )}
+          </div>
         </div>
         {message && (
           <p className="mt-4 text-gray-600 text-sm font-medium">{message}</p>

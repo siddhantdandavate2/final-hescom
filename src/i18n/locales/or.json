@@ -34,7 +34,7 @@
     "logout": "ଲଗ୍ ଆଉଟ୍"
   },
   "dashboard": {
-    "welcome": "MSEFC ପୋର୍ଟାଲକୁ ସ୍ୱାଗତ",
+    "welcome": "HESCOM ପୋର୍ଟାଲକୁ ସ୍ୱାଗତ",
     "totalTheftCases": "ମୋଟ ଚୋରି ମାମଲା",
     "resolutionRate": "ସମାଧାନ ହାର",
     "revenueRecovered": "ରାଜସ୍ୱ ପୁନରୁଦ୍ଧାର",
@@ -51,7 +51,8 @@
     "confidenceScore": "ବିଶ୍ୱାସ ସ୍କୋର",
     "threatLevel": "ବିପଦ ସ୍ତର",
     "predictedTheft": "ପୂର୍ବାନୁମାନିତ ଚୋରି ମାମଲା",
-    "aiForecasting": "AI ପୂର୍ବାନୁମାନ - ପରବର୍ତ୍ତୀ ୬ ମାସ"
+    "aiForecasting": "AI ପୂର୍ବାନୁମାନ - ପରବର୍ତ୍ତୀ ୬ ମାସ",
+    "currentLanguage": "or"
   },
   "bills": {
     "currentBill": "ବର୍ତ୍ତମାନ ବିଲ୍",

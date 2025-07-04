@@ -31,7 +31,7 @@ const ConsumerDashboard = () => {
     <div className="space-y-6">
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 rounded-lg">
-        <h2 className="text-2xl font-bold mb-2">{t('dashboard.welcome')}</h2>
+        <h2 className="text-2xl font-bold mb-2">{t('dashboard.welcome').replace('MSEFC', 'HESCOM')}</h2>
         <p className="opacity-90">Manage your electricity connection efficiently</p>
       </div>
 
@@ -136,7 +136,7 @@ const ConsumerDashboard = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle>Contact MSEFC</CardTitle>
+            <CardTitle>Contact HESCOM</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">

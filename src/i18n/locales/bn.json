@@ -34,7 +34,7 @@
     "logout": "লগ আউট"
   },
   "dashboard": {
-    "welcome": "MSEFC পোর্টালে আপনাকে স্বাগতম",
+    "welcome": "HESCOM পোর্টালে আপনাকে স্বাগতম",
     "totalTheftCases": "মোট চুরির মামলা",
     "resolutionRate": "সমাধানের হার",
     "revenueRecovered": "রাজস্ব পুনরুদ্ধার",
@@ -51,7 +51,8 @@
     "confidenceScore": "আস্থার স্কোর",
     "threatLevel": "হুমকির মাত্রা",
     "predictedTheft": "পূর্বাভাসিত চুরির মামলা",
-    "aiForecasting": "AI পূর্বাভাস - পরবর্তী ৬ মাস"
+    "aiForecasting": "AI পূর্বাভাস - পরবর্তী ৬ মাস",
+    "currentLanguage": "bn"
   },
   "bills": {
     "currentBill": "বর্তমান বিল",

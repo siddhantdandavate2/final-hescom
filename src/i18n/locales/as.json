@@ -34,7 +34,7 @@
     "logout": "লগ আউট"
   },
   "dashboard": {
-    "welcome": "MSEFC প'ৰ্টেললৈ আপোনাক স্বাগতম",
+    "welcome": "HESCOM প'ৰ্টেললৈ আপোনাক স্বাগতম",
     "totalTheftCases": "মুঠ চুৰি গোচৰ",
     "resolutionRate": "সমাধানৰ হাৰ",
     "revenueRecovered": "ৰাজহ উদ্ধাৰ",
@@ -51,7 +51,8 @@
     "confidenceScore": "আস্থাৰ স্ক'ৰ",
     "threatLevel": "ভাবুকিৰ স্তৰ",
     "predictedTheft": "পূৰ্বানুমানিত চুৰি গোচৰ",
-    "aiForecasting": "AI পূৰ্বানুমান - পৰৱৰ্তী ৬ মাহ"
+    "aiForecasting": "AI পূৰ্বানুমান - পৰৱৰ্তী ৬ মাহ",
+    "currentLanguage": "as"
   },
   "bills": {
     "currentBill": "বৰ্তমানৰ বিল",

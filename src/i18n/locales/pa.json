@@ -34,7 +34,7 @@
     "logout": "ਲਾਗ ਆਊਟ"
   },
   "dashboard": {
-    "welcome": "MSEFC ਪੋਰਟਲ ਵਿੱਚ ਤੁਹਾਡਾ ਸਵਾਗਤ ਹੈ",
+    "welcome": "HESCOM ਪੋਰਟਲ ਵਿੱਚ ਤੁਹਾਡਾ ਸਵਾਗਤ ਹੈ",
     "totalTheftCases": "ਕੁੱਲ ਚੋਰੀ ਦੇ ਕੇਸ",
     "resolutionRate": "ਹੱਲ ਦੀ ਦਰ",
     "revenueRecovered": "ਮਾਲੀਆ ਵਸੂਲੀ",
@@ -51,7 +51,8 @@
     "confidenceScore": "ਭਰੋਸਾ ਸਕੋਰ",
     "threatLevel": "ਖ਼ਤਰੇ ਦਾ ਪੱਧਰ",
     "predictedTheft": "ਅਨੁਮਾਨਿਤ ਚੋਰੀ ਦੇ ਕੇਸ",
-    "aiForecasting": "AI ਪੂਰਵ ਅਨੁਮਾਨ - ਅਗਲੇ 6 ਮਹੀਨੇ"
+    "aiForecasting": "AI ਪੂਰਵ ਅਨੁਮਾਨ - ਅਗਲੇ 6 ਮਹੀਨੇ",
+    "currentLanguage": "pa"
   },
   "bills": {
     "currentBill": "ਮੌਜੂਦਾ ਬਿੱਲ",

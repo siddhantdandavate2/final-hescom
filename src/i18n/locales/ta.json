@@ -34,7 +34,7 @@
     "logout": "வெளியேறு"
   },
   "dashboard": {
-    "welcome": "MSEFC போர்ட்டலுக்கு வரவேற்கிறோம்",
+    "welcome": "HESCOM போர்ட்டலுக்கு வரவேற்கிறோம்",
     "totalTheftCases": "மொத்த திருட்டு வழக்குகள்",
     "resolutionRate": "தீர்வு விகிதம்",
     "revenueRecovered": "வருவாய் மீட்பு",
@@ -51,7 +51,8 @@
     "confidenceScore": "நம்பிக்கை மதிப்பெண்",
     "threatLevel": "அச்சுறுத்தல் நிலை",
     "predictedTheft": "கணிக்கப்பட்ட திருட்டு வழக்குகள்",
-    "aiForecasting": "AI முன்னறிவிப்பு - அடுத்த 6 மாதங்கள்"
+    "aiForecasting": "AI முன்னறிவிப்பு - அடுத்த 6 மாதங்கள்",
+    "currentLanguage": "ta"
   },
   "bills": {
     "currentBill": "தற்போதைய பில்",

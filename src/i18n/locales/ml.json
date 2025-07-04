@@ -34,7 +34,7 @@
     "logout": "ലോഗ് ഔട്ട്"
   },
   "dashboard": {
-    "welcome": "MSEFC പോർട്ടലിലേക്ക് സ്വാഗതം",
+    "welcome": "HESCOM പോർട്ടലിലേക്ക് സ്വാഗതം",
     "totalTheftCases": "മൊത്തം മോഷണ കേസുകൾ",
     "resolutionRate": "പരിഹാര നിരക്ക്",
     "revenueRecovered": "വരുമാന വീണ്ടെടുപ്പ്",
@@ -51,7 +51,8 @@
     "confidenceScore": "വിശ്വാസ സ്കോർ",
     "threatLevel": "ഭീഷണി നില",
     "predictedTheft": "പ്രവചിച്ച മോഷണ കേസുകൾ",
-    "aiForecasting": "AI പ്രവചനം - അടുത്ത 6 മാസം"
+    "aiForecasting": "AI പ്രവചനം - അടുത്ത 6 മാസം",
+    "currentLanguage": "ml"
   },
   "bills": {
     "currentBill": "നിലവിലെ ബിൽ",
