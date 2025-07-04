@@ -58,7 +58,7 @@ export function AppSidebar() {
     isActive ? "bg-red-100 text-red-700 font-medium shadow-md" : "hover:bg-red-50 transition-colors";
 
   const mainMenuItems: MenuItem[] = [
-    { title: t('dashboard'), url: '/', icon: Home, roles: ['consumer', 'site_engineer', 'department_head'] },
+    { title: "Dashboard", url: '/', icon: Home, roles: ['consumer', 'site_engineer', 'department_head'] },
   ];
 
   const serviceMenuItems: MenuGroup = {
