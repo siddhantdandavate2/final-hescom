@@ -59,8 +59,22 @@
     "underInvestigation": "ತನಿಖೆಯಲ್ಲಿ",
     "confidenceScore": "ವಿಶ್ವಾಸಾರ್ಹತೆ ಸ್ಕೋರ್",
     "threatLevel": "ಬೆದರಿಕೆ ಮಟ್ಟ",
+    "vsLastMonth": "ಕಳೆದ ತಿಂಗಳಿಗೆ ಹೋಲಿಸಿ",
+    "improvement": "ಸುಧಾರಣೆ",
+    "thisMonth": "ಈ ತಿಂಗಳು",
+    "aiEnhanced": "AI ವರ್ಧಿತ",
+    "resolvedToday": "ಇಂದು ಪರಿಹರಿಸಲಾಗಿದೆ",
     "predictedTheft": "ಅಂದಾಜು ಕಳ್ಳತನ ಪ್ರಕರಣಗಳು",
-    "aiForecasting": "AI ಮುನ್ಸೂಚನೆ - ಮುಂದಿನ ೬ ತಿಂಗಳುಗಳು"
+    "aiForecasting": "AI ಮುನ್ಸೂಚನೆ - ಮುಂದಿನ ೬ ತಿಂಗಳುಗಳು",
+    "departmentHead": "ಇಲಾಖಾ ಮುಖ್ಯಸ್ಥರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+    "stateWideAnalytics": "ರಾಜ್ಯವ್ಯಾಪಿ ವಿಶ್ಲೇಷಣೆ ಮತ್ತು ತಂತ್ರಾತ್ಮಕ ಒಳನೋಟಗಳು",
+    "liveData": "ಲೈವ್ ಡೇಟಾ",
+    "lastUpdated": "ಕೊನೆಯದಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ",
+    "allZones": "ಎಲ್ಲಾ ವಲಯಗಳು",
+    "overview": "ಅವಲೋಕನ",
+    "fraudAnalytics": "ವಂಚನೆ ವಿಶ್ಲೇಷಣೆ",
+    "aiForecast": "AI ಮುನ್ಸೂಚನೆ",
+    "liveAlerts": "ಲೈವ್ ಎಚ್ಚರಿಕೆಗಳು"
   },
   "zones": {
     "bengaluru": "ಬೆಂಗಳೂರು",

@@ -59,8 +59,22 @@
     "underInvestigation": "जांच के तहत",
     "confidenceScore": "विश्वास स्कोर",
     "threatLevel": "खतरे का स्तर",
+    "vsLastMonth": "पिछले महीने की तुलना में",
+    "improvement": "सुधार",
+    "thisMonth": "इस महीने",
+    "aiEnhanced": "AI संवर्धित",
+    "resolvedToday": "आज हल किया गया",
     "predictedTheft": "अनुमानित चोरी के मामले",
-    "aiForecasting": "AI पूर्वानुमान - अगले 6 महीने"
+    "aiForecasting": "AI पूर्वानुमान - अगले 6 महीने",
+    "departmentHead": "विभाग प्रमुख डैशबोर्ड",
+    "stateWideAnalytics": "राज्य-व्यापी विश्लेषण और रणनीतिक अंतर्दृष्टि",
+    "liveData": "लाइव डेटा",
+    "lastUpdated": "अंतिम अपडेट",
+    "allZones": "सभी क्षेत्र",
+    "overview": "अवलोकन",
+    "fraudAnalytics": "धोखाधड़ी विश्लेषण",
+    "aiForecast": "AI पूर्वानुमान",
+    "liveAlerts": "लाइव अलर्ट"
   },
   "zones": {
     "bengaluru": "बेंगलुरु",
