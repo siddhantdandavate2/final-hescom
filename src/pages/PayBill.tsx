@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,12 +6,16 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { CreditCard, Download, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalization } from '@/utils/localization';
 
 const PayBill = () => {
   const [paymentMethod, setPaymentMethod] = useState('upi');
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
+  const { formatCurrency, formatDate, formatNumber } = useLocalization();
 
   const handlePayment = async () => {
     setIsProcessing(true);
@@ -24,8 +27,8 @@ const PayBill = () => {
     setIsProcessing(false);
     
     toast({
-      title: "Payment Successful",
-      description: "Your electricity bill has been paid successfully.",
+      title: t('bills.paymentSuccessful'),
+      description: t('bills.paymentSuccessful'),
     });
   };
 
@@ -35,12 +38,12 @@ const PayBill = () => {
         <Card className="text-center">
           <CardContent className="p-8">
             <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-green-700 mb-2">Payment Successful!</h2>
-            <p className="text-gray-600 mb-4">Transaction ID: TXN123456789</p>
-            <p className="text-gray-600 mb-6">Amount Paid: ₹2,450</p>
+            <h2 className="text-2xl font-bold text-green-700 mb-2">{t('bills.paymentSuccessful')}!</h2>
+            <p className="text-gray-600 mb-4">{t('bills.transactionId')}: TXN123456789</p>
+            <p className="text-gray-600 mb-6">{t('bills.amountPaid')}: {formatCurrency(2450)}</p>
             <div className="flex space-x-4 justify-center">
-              <Button variant="outline">Download Receipt</Button>
-              <Button onClick={() => setPaymentSuccess(false)}>Make Another Payment</Button>
+              <Button variant="outline">{t('bills.downloadBill')}</Button>
+              <Button onClick={() => setPaymentSuccess(false)}>{t('bills.payNow')}</Button>
             </div>
           </CardContent>
         </Card>
@@ -51,7 +54,7 @@ const PayBill = () => {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Pay Your Bill</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('bills.payNow')}</h1>
         <p className="text-gray-600">Quick and secure payment options</p>
       </div>
 
@@ -59,39 +62,39 @@ const PayBill = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            Current Bill Details
-            <Badge variant="outline" className="text-red-600">Due: 15 Jan 2025</Badge>
+            {t('bills.currentBill')}
+            <Badge variant="outline" className="text-red-600">{t('bills.dueDate')}: 15 Jan 2025</Badge>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label className="text-sm text-gray-600">Consumer Number</Label>
+                <Label className="text-sm text-gray-600">{t('fraud.consumerNumber')}</Label>
                 <p className="font-semibold">KA001234567890</p>
               </div>
               <div>
-                <Label className="text-sm text-gray-600">Bill Period</Label>
+                <Label className="text-sm text-gray-600">{t('bills.billPeriod')}</Label>
                 <p className="font-semibold">Dec 2024</p>
               </div>
             </div>
             
             <div className="border-t pt-4">
               <div className="flex justify-between items-center mb-2">
-                <span>Energy Charges:</span>
-                <span>₹1,850</span>
+                <span>{t('bills.energyCharges')}:</span>
+                <span>{formatCurrency(1850)}</span>
               </div>
               <div className="flex justify-between items-center mb-2">
-                <span>Fixed Charges:</span>
-                <span>₹200</span>
+                <span>{t('bills.fixedCharges')}:</span>
+                <span>{formatCurrency(200)}</span>
               </div>
               <div className="flex justify-between items-center mb-2">
-                <span>Taxes & Duties:</span>
-                <span>₹400</span>
+                <span>{t('bills.taxesAndDuties')}:</span>
+                <span>{formatCurrency(400)}</span>
               </div>
               <div className="flex justify-between items-center text-xl font-bold border-t pt-2">
-                <span>Total Amount:</span>
-                <span className="text-red-600">₹2,450</span>
+                <span>{t('bills.totalAmount')}:</span>
+                <span className="text-red-600">{formatCurrency(2450)}</span>
               </div>
             </div>
           </div>
@@ -178,7 +181,7 @@ const PayBill = () => {
             onClick={handlePayment}
             disabled={isProcessing}
           >
-            {isProcessing ? 'Processing Payment...' : `Pay ₹2,450`}
+            {isProcessing ? t('common.loading') : `${t('bills.payNow')} ${formatCurrency(2450)}`}
           </Button>
         </CardContent>
       </Card>

@@ -1,10 +1,14 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, PieChart, Pie, Cell } from 'recharts';
 import { karnatakaZones } from '@/data/karnatakaData';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalization } from '@/utils/localization';
 
 const PerformanceChartsSection: React.FC = () => {
+  const { t } = useLanguage();
+  const { formatNumber, formatPercentage } = useLocalization();
+  
   const monthlyData = [
     { month: 'Jul', theft: 45, resolved: 38, revenue: 2400000, efficiency: 84, fraud: 12 },
     { month: 'Aug', theft: 52, resolved: 45, revenue: 2800000, efficiency: 87, fraud: 15 },
@@ -32,10 +36,17 @@ const PerformanceChartsSection: React.FC = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis />
-              <Tooltip />
-              <Area type="monotone" dataKey="theft" stackId="1" stroke="#DC2626" fill="#DC2626" fillOpacity={0.6} name="Theft Cases" />
-              <Area type="monotone" dataKey="resolved" stackId="2" stroke="#16A34A" fill="#16A34A" fillOpacity={0.6} name="Resolved" />
-              <Area type="monotone" dataKey="fraud" stackId="3" stroke="#F59E0B" fill="#F59E0B" fillOpacity={0.6} name="Fraud Cases" />
+              <Tooltip 
+                formatter={(value: number, name: string) => {
+                  if (name === 'theft') return [formatNumber(value), t('dashboard.totalTheftCases')];
+                  if (name === 'resolved') return [formatNumber(value), t('dashboard.resolvedCases')];
+                  if (name === 'fraud') return [formatNumber(value), t('fraud.fraudDetection')];
+                  return [formatNumber(value), name];
+                }}
+              />
+              <Area type="monotone" dataKey="theft" stackId="1" stroke="#DC2626" fill="#DC2626" fillOpacity={0.6} name="theft" />
+              <Area type="monotone" dataKey="resolved" stackId="2" stroke="#16A34A" fill="#16A34A" fillOpacity={0.6} name="resolved" />
+              <Area type="monotone" dataKey="fraud" stackId="3" stroke="#F59E0B" fill="#F59E0B" fillOpacity={0.6} name="fraud" />
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
@@ -55,13 +66,13 @@ const PerformanceChartsSection: React.FC = () => {
                 outerRadius={120}
                 fill="#8884d8"
                 dataKey="value"
-                label={({ name, value }) => `${name}: ${value.toFixed(1)}%`}
+                label={({ name, value }) => `${name}: ${formatPercentage(value)}`}
               >
                 {zoneDistribution.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value: number) => [`${value.toFixed(1)}%`, 'Theft Rate']} />
+              <Tooltip formatter={(value: number) => [formatPercentage(value), t('dashboard.threatLevel')]} />
             </PieChart>
           </ResponsiveContainer>
         </CardContent>

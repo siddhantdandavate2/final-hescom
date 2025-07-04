@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   TrendingUp, 
@@ -14,6 +13,7 @@ import { useRealTimeData } from '@/hooks/useRealTimeData';
 import { useFraudDetection } from '@/hooks/useFraudDetection';
 import { karnatakaZones, generateZoneData } from '@/data/karnatakaData';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalization } from '@/utils/localization';
 import KPICard from '@/components/KPICard';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import FraudAnalyticsSection from '@/components/dashboard/FraudAnalyticsSection';
@@ -31,6 +31,7 @@ const DepartmentHeadDashboard = () => {
   const kpiData = useRealTimeData();
   const fraudData = useFraudDetection();
   const { t } = useLanguage();
+  const { formatCurrency, formatNumber, formatPercentage } = useLocalization();
 
   const currentZoneData = selectedZone === 'all-zones' ? kpiData : generateZoneData(selectedZone) || kpiData;
 
@@ -70,7 +71,7 @@ const DepartmentHeadDashboard = () => {
       {/* Enhanced KPIs with Fraud Detection */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
         <KPICard
-          title={t('totalTheftCases')}
+          title={t('dashboard.totalTheftCases')}
           value={currentZoneData.powerTheft}
           icon={AlertTriangle}
           trend="up"
@@ -78,40 +79,42 @@ const DepartmentHeadDashboard = () => {
           className="kpi-update border-l-4 border-l-red-500"
         />
         <KPICard
-          title="Total Fraud Cases"
+          title={t('dashboard.fraudCases')}
           value={fraudData.stats.totalCases}
           icon={Shield}
           trend="up"
-          trendValue={`${fraudData.stats.activeCases} active`}
+          trendValue={`${fraudData.stats.activeCases} ${t('dashboard.activeCases')}`}
           className="border-l-4 border-l-orange-500"
         />
         <KPICard
-          title="Fraud Resolved"
-          value={`${Math.round((fraudData.stats.resolvedCases / fraudData.stats.totalCases) * 100)}%`}
+          title={t('dashboard.resolvedCases')}
+          value={formatPercentage(Math.round((fraudData.stats.resolvedCases / fraudData.stats.totalCases) * 100))}
           icon={ShieldCheck}
           trend="up"
           trendValue="5% improvement"
           className="border-l-4 border-l-green-500"
         />
         <KPICard
-          title="Amount Recovered"
-          value={`₹${(fraudData.stats.totalAmountInvolved / 100000).toFixed(1)}L`}
+          title={t('dashboard.amountRecovered')}
+          value={formatCurrency(fraudData.stats.totalAmountInvolved)}
           icon={DollarSign}
           trend="up"
-          trendValue="₹2.4L this month"
+          trendValue={formatCurrency(240000) + " this month"}
           className="border-l-4 border-l-blue-500"
+          type="currency"
         />
         <KPICard
-          title="AI Detection Rate"
-          value={`${Math.round((fraudData.stats.aiDetectedCases / fraudData.stats.totalCases) * 100)}%`}
+          title={t('dashboard.aiDetection')}
+          value={formatPercentage(Math.round((fraudData.stats.aiDetectedCases / fraudData.stats.totalCases) * 100))}
           icon={Brain}
           trend="stable"
           trendValue="AI Enhanced"
           className="border-l-4 border-l-purple-500"
+          type="percentage"
         />
         <KPICard
-          title="High Priority Cases"
-          value={fraudData.stats.highSeverityCases}
+          title={t('dashboard.highPriority')}
+          value={formatNumber(fraudData.stats.highSeverityCases)}
           icon={ShieldAlert}
           trend="down"
           trendValue="2 resolved today"

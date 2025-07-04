@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -6,9 +5,11 @@ import { Progress } from '@/components/ui/progress';
 import { Brain } from 'lucide-react';
 import { aiForecasting } from '@/data/karnatakaData';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalization } from '@/utils/localization';
 
 const AIForecastingCard: React.FC = () => {
   const { t } = useLanguage();
+  const { formatNumber, formatPercentage } = useLocalization();
   const forecastData = aiForecasting.nextSixMonths[0].zones;
 
   return (
@@ -16,7 +17,7 @@ const AIForecastingCard: React.FC = () => {
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
           <Brain className="h-6 w-6 text-red-600" />
-          <span>{t('aiForecasting')}</span>
+          <span>{t('dashboard.aiForecasting')}</span>
           <Badge variant="outline" className="text-blue-600 bg-blue-50">AI Enhanced</Badge>
         </CardTitle>
       </CardHeader>
@@ -35,11 +36,11 @@ const AIForecastingCard: React.FC = () => {
                 </div>
                 <div className="space-y-2">
                   <div>
-                    <p className="text-2xl font-bold text-red-600">{prediction.predictedTheft}</p>
-                    <p className="text-sm text-gray-600">{t('predictedTheft')}</p>
+                    <p className="text-2xl font-bold text-red-600">{formatNumber(prediction.predictedTheft)}</p>
+                    <p className="text-sm text-gray-600">{t('dashboard.predictedTheft')}</p>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span>{t('confidence')}: {prediction.confidence}%</span>
+                    <span>{t('dashboard.confidenceScore')}: {formatPercentage(prediction.confidence)}</span>
                     <span className="text-gray-500">Next 6 months</span>
                   </div>
                   <Progress value={prediction.confidence} className="h-2" />

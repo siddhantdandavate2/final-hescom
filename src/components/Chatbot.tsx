@@ -1,10 +1,8 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { 
   MessageCircle, 
   Send, 
@@ -30,6 +28,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { useLocalization } from '@/utils/localization';
 
 interface Message {
   id: string;
@@ -56,6 +55,7 @@ const Chatbot = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { formatCurrency, formatNumber } = useLocalization();
 
   const recognition = useRef<SpeechRecognition | null>(null);
 
@@ -87,40 +87,40 @@ const Chatbot = () => {
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      addBotMessage(t('chatbotWelcome'), [
+      addBotMessage(t('chatbot.welcome'), [
         {
-          label: '💳 Pay Bill',
+          label: `💳 ${t('chatbot.payBill')}`,
           action: () => navigate('/pay-bill'),
           icon: <CreditCard className="h-4 w-4" />
         },
         {
-          label: '📄 View Bill',
+          label: `📄 ${t('chatbot.viewBill')}`,
           action: () => handleViewBill(),
           icon: <FileText className="h-4 w-4" />
         },
         {
-          label: '📝 Submit Complaint',
+          label: `📝 ${t('chatbot.submitComplaint')}`,
           action: () => navigate('/complaints'),
           icon: <FileText className="h-4 w-4" />
         },
         {
-          label: '📍 Nearest Office',
+          label: `📍 ${t('chatbot.nearestOffice')}`,
           action: () => navigate('/nearest-office'),
           icon: <MapPin className="h-4 w-4" />
         },
         {
-          label: '🧮 Bill Calculator',
+          label: `🧮 ${t('chatbot.billCalculator')}`,
           action: () => handleBillCalculator(),
           icon: <Calculator className="h-4 w-4" />
         },
         {
-          label: '⚡ Emergency Help',
+          label: `⚡ ${t('chatbot.emergencyHelp')}`,
           action: () => handleEmergencyContact(),
           icon: <Phone className="h-4 w-4" />
         }
       ]);
     }
-  }, [isOpen]);
+  }, [isOpen, t, navigate]);
 
   const addUserMessage = (text: string) => {
     const newMessage: Message = {
@@ -152,168 +152,69 @@ const Chatbot = () => {
     
     if (lowerInput.includes('bill') || lowerInput.includes('payment')) {
       if (lowerInput.includes('pay')) {
-        addBotMessage('I can help you pay your bill. Here are your options:', [
+        addBotMessage(`${t('bills.currentBill')}: ${formatCurrency(2450)}`, [
           {
-            label: '💳 Pay Current Bill (₹2,450)',
+            label: `💳 ${t('bills.payNow')} (${formatCurrency(2450)})`,
             action: () => navigate('/pay-bill'),
             icon: <CreditCard className="h-4 w-4" />
           },
           {
-            label: '📄 View Bill Details',
+            label: `📄 ${t('bills.viewBill')}`,
             action: () => handleViewBill(),
             icon: <FileText className="h-4 w-4" />
           },
           {
-            label: '📥 Download Bill PDF',
+            label: `📥 ${t('bills.downloadBill')}`,
             action: () => handleDownloadBill(),
             icon: <Download className="h-4 w-4" />
-          },
-          {
-            label: '🧮 Calculate Usage',
-            action: () => handleBillCalculator(),
-            icon: <Calculator className="h-4 w-4" />
           }
         ]);
-      } else if (lowerInput.includes('view') || lowerInput.includes('show')) {
-        handleViewBill();
-      } else if (lowerInput.includes('calculate')) {
-        handleBillCalculator();
       } else {
-        addBotMessage('Your current bill amount is ₹2,450. Due date: Jan 15, 2025. Would you like to pay now?', [
+        addBotMessage(`${t('bills.billAmount')}: ${formatCurrency(2450)}\n${t('bills.dueDate')}: Jan 15, 2025\n${t('bills.unitsConsumed')}: ${formatNumber(640)} kWh`, [
           {
-            label: '💳 Pay Now',
+            label: `💳 ${t('bills.payNow')}`,
             action: () => navigate('/pay-bill'),
             icon: <CreditCard className="h-4 w-4" />
           },
           {
-            label: '📄 View Details',
+            label: `📄 ${t('bills.viewBill')}`,
             action: () => handleViewBill(),
             icon: <FileText className="h-4 w-4" />
           }
         ]);
       }
     } else if (lowerInput.includes('complaint') || lowerInput.includes('issue') || lowerInput.includes('problem')) {
-      addBotMessage('I can help you with complaints. What would you like to do?', [
+      addBotMessage(t('complaints.newComplaint'), [
         {
-          label: '📝 Submit New Complaint',
+          label: `📝 ${t('complaints.newComplaint')}`,
           action: () => navigate('/complaints'),
           icon: <FileText className="h-4 w-4" />
         },
         {
-          label: '🔍 Track Existing Complaint',
+          label: `🔍 ${t('complaints.status')}`,
           action: () => navigate('/complaints'),
           icon: <FileText className="h-4 w-4" />
         },
         {
-          label: '⚡ Emergency Contact',
-          action: () => handleEmergencyContact(),
-          icon: <Phone className="h-4 w-4" />
-        }
-      ]);
-    } else if (lowerInput.includes('meter') || lowerInput.includes('reading')) {
-      addBotMessage('Let me help you with meter reading:', [
-        {
-          label: '📷 Upload Meter Photo',
-          action: () => handleCameraCapture(),
-          icon: <Camera className="h-4 w-4" />
-        },
-        {
-          label: '✏️ Manual Entry',
-          action: () => navigate('/'),
-          icon: <FileText className="h-4 w-4" />
-        },
-        {
-          label: '📊 View Usage History',
-          action: () => navigate('/'),
-          icon: <FileText className="h-4 w-4" />
-        }
-      ]);
-    } else if (lowerInput.includes('office') || lowerInput.includes('location')) {
-      addBotMessage('Finding nearest offices for you...', [
-        {
-          label: '📍 View Nearest Offices',
-          action: () => navigate('/nearest-office'),
-          icon: <MapPin className="h-4 w-4" />
-        },
-        {
-          label: '⚡ Emergency Contact',
-          action: () => handleEmergencyContact(),
-          icon: <Phone className="h-4 w-4" />
-        }
-      ]);
-    } else if (lowerInput.includes('profile') || lowerInput.includes('account')) {
-      addBotMessage('Account management options:', [
-        {
-          label: '👤 View Profile',
-          action: () => navigate('/profile'),
-          icon: <User className="h-4 w-4" />
-        },
-        {
-          label: '⚙️ Settings',
-          action: () => navigate('/settings'),
-          icon: <Settings className="h-4 w-4" />
-        }
-      ]);
-    } else if (lowerInput.includes('document') || lowerInput.includes('vault')) {
-      addBotMessage('Access your documents:', [
-        {
-          label: '🗂️ Document Vault',
-          action: () => navigate('/documents'),
-          icon: <FileText className="h-4 w-4" />
-        },
-        {
-          label: '📥 Download Bills',
-          action: () => handleDownloadBill(),
-          icon: <Download className="h-4 w-4" />
-        }
-      ]);
-    } else if (lowerInput.includes('help') || lowerInput.includes('support')) {
-      addBotMessage('Here are all the ways I can help you:', [
-        {
-          label: '💳 Pay Bills',
-          action: () => navigate('/pay-bill'),
-          icon: <CreditCard className="h-4 w-4" />
-        },
-        {
-          label: '📝 Submit Complaint',
-          action: () => navigate('/complaints'),
-          icon: <FileText className="h-4 w-4" />
-        },
-        {
-          label: '📷 Upload Meter Reading',
-          action: () => handleCameraCapture(),
-          icon: <Camera className="h-4 w-4" />
-        },
-        {
-          label: '📍 Find Offices',
-          action: () => navigate('/nearest-office'),
-          icon: <MapPin className="h-4 w-4" />
-        },
-        {
-          label: '⚡ Emergency Help',
+          label: `⚡ ${t('chatbot.emergencyHelp')}`,
           action: () => handleEmergencyContact(),
           icon: <Phone className="h-4 w-4" />
         }
       ]);
     } else {
-      addBotMessage('I can help you with various services. Choose an option:', [
+      addBotMessage(t('chatbot.welcome'), [
         {
-          label: '💳 Pay Bills',
+          label: `💳 ${t('chatbot.payBill')}`,
           action: () => navigate('/pay-bill'),
           icon: <CreditCard className="h-4 w-4" />
         },
         {
-          label: '📝 Submit Complaint',
+          label: `📝 ${t('chatbot.submitComplaint')}`,
           action: () => navigate('/complaints'),
           icon: <FileText className="h-4 w-4" />
         },
         {
-          label: '📷 Upload Meter Reading',
-          action: () => handleCameraCapture(),
-          icon: <Camera className="h-4 w-4" />
-        },
-        {
-          label: '📍 Find Offices',
+          label: `📍 ${t('chatbot.nearestOffice')}`,
           action: () => navigate('/nearest-office'),
           icon: <MapPin className="h-4 w-4" />
         }
@@ -324,21 +225,16 @@ const Chatbot = () => {
   const handleViewBill = () => {
     setIsProcessing(true);
     setTimeout(() => {
-      addBotMessage(`Here are your bill details:\n\n💰 Amount: ₹2,450\n📅 Due Date: Jan 15, 2025\n⚡ Units: 640 kWh\n🔢 Consumer ID: ${user?.consumerNumber}\n🏠 Address: ${user?.address || 'Bengaluru, Karnataka'}`, [
+      addBotMessage(`${t('bills.billAmount')}: ${formatCurrency(2450)}\n${t('bills.dueDate')}: Jan 15, 2025\n${t('bills.unitsConsumed')}: ${formatNumber(640)} kWh\n${t('profile.address')}: ${user?.address || 'Bengaluru, Karnataka'}`, [
         {
-          label: '📥 Download PDF',
+          label: `📥 ${t('bills.downloadBill')}`,
           action: () => handleDownloadBill(),
           icon: <Download className="h-4 w-4" />
         },
         {
-          label: '💳 Pay Now',
+          label: `💳 ${t('bills.payNow')}`,
           action: () => navigate('/pay-bill'),
           icon: <CreditCard className="h-4 w-4" />
-        },
-        {
-          label: '📊 View Usage History',
-          action: () => navigate('/'),
-          icon: <FileText className="h-4 w-4" />
         }
       ]);
       setIsProcessing(false);
@@ -348,57 +244,46 @@ const Chatbot = () => {
   const handleDownloadBill = () => {
     setIsProcessing(true);
     setTimeout(() => {
-      // Simulate bill download
-      const link = document.createElement('a');
       const billContent = `
 MSEFC ELECTRICITY BILL
 ======================
-Consumer Name: ${user?.name}
-Consumer Number: ${user?.consumerNumber}
-Address: ${user?.address || 'Bengaluru, Karnataka'}
+${t('profile.fullName')}: ${user?.name}
+${t('fraud.consumerNumber')}: ${user?.consumerNumber}
+${t('profile.address')}: ${user?.address || 'Bengaluru, Karnataka'}
 
-Bill Period: December 2024
-Bill Date: Jan 01, 2025
-Due Date: Jan 15, 2025
+${t('bills.billPeriod')}: December 2024
+${t('bills.dueDate')}: Jan 15, 2025
 
-Previous Reading: 1200 kWh
-Current Reading: 1840 kWh
-Units Consumed: 640 kWh
-
-Charges Breakdown:
-- Energy Charges: ₹1,850
-- Fixed Charges: ₹200
-- Taxes & Duties: ₹400
-- Total Amount: ₹2,450
-
-Payment Status: Pending
+${t('bills.unitsConsumed')}: ${formatNumber(640)} kWh
+${t('bills.totalAmount')}: ${formatCurrency(2450)}
       `;
       
       const blob = new Blob([billContent], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
       link.href = url;
       link.download = `electricity-bill-${user?.consumerNumber}.txt`;
       link.click();
       URL.revokeObjectURL(url);
       
-      addBotMessage('✅ Your bill has been downloaded successfully!');
+      addBotMessage(`✅ ${t('bills.downloadBill')} ${t('common.ok')}!`);
       toast({
-        title: "Bill Downloaded",
-        description: "Your electricity bill has been saved to your downloads folder.",
+        title: t('bills.downloadBill'),
+        description: t('bills.downloadBill'),
       });
       setIsProcessing(false);
     }, 1000);
   };
 
   const handleBillCalculator = () => {
-    addBotMessage('💡 Bill Calculator - Estimate your electricity costs:', [
+    addBotMessage(`💡 ${t('chatbot.billCalculator')}:`, [
       {
-        label: '🧮 Calculate Bill',
+        label: `🧮 ${t('chatbot.billCalculator')}`,
         action: () => {
-          const units = prompt('Enter units consumed (kWh):');
+          const units = prompt(`${t('bills.unitsConsumed')} (kWh):`);
           if (units) {
-            const amount = parseFloat(units) * 3.5 + 200; // Simple calculation
-            addBotMessage(`📊 Estimated Bill for ${units} kWh: ₹${amount.toFixed(2)}\n\nThis includes:\n• Energy Charges: ₹${(parseFloat(units) * 3.5).toFixed(2)}\n• Fixed Charges: ₹200\n• Taxes (approx): ₹${(amount * 0.15).toFixed(2)}`);
+            const amount = parseFloat(units) * 3.5 + 200;
+            addBotMessage(`📊 ${t('bills.billAmount')}: ${formatCurrency(amount)}\n${t('bills.unitsConsumed')}: ${formatNumber(parseFloat(units))} kWh`);
           }
         },
         icon: <Calculator className="h-4 w-4" />
@@ -406,45 +291,8 @@ Payment Status: Pending
     ]);
   };
 
-  const handleCameraCapture = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.capture = 'environment';
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        setIsProcessing(true);
-        addBotMessage('📷 Meter reading photo captured! Processing...');
-        
-        setTimeout(() => {
-          const randomReading = Math.floor(Math.random() * 1000) + 1500;
-          addBotMessage(`✅ Meter reading processed successfully!\n\n📊 Reading: ${randomReading} kWh\n📅 Date: ${new Date().toLocaleDateString()}\n\nThank you for submitting your meter reading!`, [
-            {
-              label: '📄 View History',
-              action: () => navigate('/'),
-              icon: <FileText className="h-4 w-4" />
-            },
-            {
-              label: '🧮 Calculate Bill',
-              action: () => handleBillCalculator(),
-              icon: <Calculator className="h-4 w-4" />
-            }
-          ]);
-          setIsProcessing(false);
-          
-          toast({
-            title: "Meter Reading Submitted",
-            description: `Reading of ${randomReading} kWh has been recorded successfully.`,
-          });
-        }, 2000);
-      }
-    };
-    input.click();
-  };
-
   const handleEmergencyContact = () => {
-    addBotMessage('🚨 Emergency Contacts & Help:\n\n📞 Toll Free: 1912\n📞 Helpline: 080-22222222\n📱 WhatsApp: +91-9876543210\n📧 Email: help@msefc.karnataka.gov.in\n\n⚡ For power outages, theft, or urgent issues', [
+    addBotMessage(`🚨 ${t('chatbot.emergencyHelp')}:\n\n📞 Toll Free: 1912\n📞 Helpline: 080-22222222\n📱 WhatsApp: +91-9876543210`, [
       {
         label: '📞 Call Now',
         action: () => window.open('tel:1912'),
@@ -577,7 +425,7 @@ Payment Status: Pending
                         <div className="w-2 h-2 bg-red-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                       </div>
                       <span className="text-sm text-gray-600">
-                        {isProcessing ? 'Processing...' : 'Typing...'}
+                        {isProcessing ? t('common.loading') : 'Typing...'}
                       </span>
                     </div>
                   </div>
@@ -592,7 +440,7 @@ Payment Status: Pending
                 <Input
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
-                  placeholder={t('chatbotPlaceholder')}
+                  placeholder={t('chatbot.placeholder')}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   className="flex-1 rounded-full border-2 border-gray-200 focus:border-red-500"
                 />

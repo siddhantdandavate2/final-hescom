@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -12,6 +11,8 @@ import {
   Phone
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalization } from '@/utils/localization';
 
 const usageData = [
   { month: 'Jan', units: 420 },
@@ -23,11 +24,14 @@ const usageData = [
 ];
 
 const ConsumerDashboard = () => {
+  const { t } = useLanguage();
+  const { formatCurrency, formatNumber } = useLocalization();
+
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 rounded-lg">
-        <h2 className="text-2xl font-bold mb-2">Welcome to MSEFC Portal</h2>
+        <h2 className="text-2xl font-bold mb-2">{t('dashboard.welcome')}</h2>
         <p className="opacity-90">Manage your electricity connection efficiently</p>
       </div>
 
@@ -36,7 +40,7 @@ const ConsumerDashboard = () => {
         <Card className="hover:shadow-lg transition-shadow cursor-pointer">
           <CardContent className="p-4 text-center">
             <CreditCard className="h-8 w-8 text-red-600 mx-auto mb-2" />
-            <h3 className="font-semibold">Pay Bill</h3>
+            <h3 className="font-semibold">{t('navigation.payBill')}</h3>
             <p className="text-sm text-gray-600">Quick payment</p>
           </CardContent>
         </Card>
@@ -60,7 +64,7 @@ const ConsumerDashboard = () => {
         <Card className="hover:shadow-lg transition-shadow cursor-pointer">
           <CardContent className="p-4 text-center">
             <Calculator className="h-8 w-8 text-red-600 mx-auto mb-2" />
-            <h3 className="font-semibold">Bill Calculator</h3>
+            <h3 className="font-semibold">{t('chatbot.billCalculator')}</h3>
             <p className="text-sm text-gray-600">Estimate usage</p>
           </CardContent>
         </Card>
@@ -71,26 +75,26 @@ const ConsumerDashboard = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              Current Bill
-              <Badge variant="outline" className="text-red-600">Pending</Badge>
+              {t('bills.currentBill')}
+              <Badge variant="outline" className="text-red-600">{t('complaints.pending')}</Badge>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex justify-between">
-                <span>Bill Amount:</span>
-                <span className="font-bold text-xl">₹2,450</span>
+                <span>{t('bills.billAmount')}:</span>
+                <span className="font-bold text-xl">{formatCurrency(2450)}</span>
               </div>
               <div className="flex justify-between">
-                <span>Due Date:</span>
+                <span>{t('bills.dueDate')}:</span>
                 <span className="text-red-600">15 Jan 2025</span>
               </div>
               <div className="flex justify-between">
-                <span>Units Consumed:</span>
-                <span>640 kWh</span>
+                <span>{t('bills.unitsConsumed')}:</span>
+                <span>{formatNumber(640)} kWh</span>
               </div>
               <Button className="w-full bg-red-600 hover:bg-red-700">
-                Pay Now
+                {t('bills.payNow')}
               </Button>
             </div>
           </CardContent>
@@ -106,7 +110,7 @@ const ConsumerDashboard = () => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip formatter={(value: number) => [formatNumber(value), 'Units']} />
                 <Line type="monotone" dataKey="units" stroke="#DC2626" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
@@ -125,7 +129,7 @@ const ConsumerDashboard = () => {
               Join our green energy program and save on your electricity bills.
             </p>
             <Button variant="outline" className="w-full">
-              Learn More
+              {t('common.view')}
             </Button>
           </CardContent>
         </Card>

@@ -1,9 +1,10 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Download, Clock } from 'lucide-react';
 import { karnatakaZones } from '@/data/karnatakaData';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocalization } from '@/utils/localization';
 
 interface DashboardHeaderProps {
   selectedZone: string;
@@ -20,6 +21,9 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   onViewChange,
   onExportReport
 }) => {
+  const { t } = useLanguage();
+  const { formatDate } = useLocalization();
+  
   return (
     <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 rounded-lg shadow-lg">
       <div className="flex justify-between items-center">
@@ -33,7 +37,9 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             </div>
             <div className="flex items-center space-x-2">
               <Clock className="h-4 w-4" />
-              <span className="text-sm">Last updated: {new Date().toLocaleTimeString()}</span>
+              <span className="text-sm">
+                {t('common.loading')}: {formatDate(new Date(), { timeStyle: 'medium' })}
+              </span>
             </div>
           </div>
         </div>
@@ -64,7 +70,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           </Select>
           <Button variant="secondary" onClick={onExportReport} className="flex items-center space-x-2">
             <Download className="h-4 w-4" />
-            <span>Export Report</span>
+            <span>{t('common.export')}</span>
           </Button>
         </div>
       </div>
