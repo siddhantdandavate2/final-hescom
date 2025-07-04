@@ -36,7 +36,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     {user?.role === 'site_engineer' && 'Site Engineer Dashboard'}
                     {user?.role === 'department_head' && 'Department Head Dashboard'}
                   </h1>
-                  <p className="text-sm text-gray-600">{t('welcome')}, {user?.name}</p>
+                  <p className="text-sm text-gray-600">Welcome, {user?.name}</p>
                 </div>
               </div>
               
