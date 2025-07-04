@@ -32,7 +32,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <SidebarTrigger className="text-red-600" />
                 <div>
                   <h1 className="text-xl font-semibold text-gray-900">
-                    {user?.role === 'consumer' && t('dashboard')}
+                    {user?.role === 'consumer' && "Dashboard"}
                     {user?.role === 'site_engineer' && 'Site Engineer Dashboard'}
                     {user?.role === 'department_head' && 'Department Head Dashboard'}
                   </h1>
