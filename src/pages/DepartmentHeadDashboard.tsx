@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   TrendingUp, 
-  DollarSign, 
+  IndianRupee, 
   AlertTriangle, 
   CheckCircle,
   Brain,
@@ -97,7 +97,7 @@ const DepartmentHeadDashboard = () => {
         <KPICard
           title={t('dashboard.amountRecovered')}
           value={formatCurrency(fraudData.stats.totalAmountInvolved)}
-          icon={DollarSign}
+          icon={IndianRupee}
           trend="up"
           trendValue={`${formatCurrency(240000)} ${t('dashboard.thisMonth')}`}
           className="border-l-4 border-l-blue-500"

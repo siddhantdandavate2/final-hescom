@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DollarSign } from 'lucide-react';
+import { IndianRupee } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalization } from '@/utils/localization';
@@ -22,7 +22,7 @@ const RevenueAnalyticsCard: React.FC = () => {
     <Card className="shadow-lg">
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
-          <DollarSign className="h-5 w-5 text-green-600" />
+          <IndianRupee className="h-5 w-5 text-green-600" />
           <span>{t('dashboard.revenueRecovered')}</span>
         </CardTitle>
       </CardHeader>
