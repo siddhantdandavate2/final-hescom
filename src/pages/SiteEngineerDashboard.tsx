@@ -41,7 +41,7 @@ const SiteEngineerDashboard = () => {
   const theftAlerts = [
     { id: 1, location: 'Sector 12, Hubli', severity: 'High', time: '2 mins ago', status: 'pending' },
     { id: 2, location: 'Jayanagar, Dharwad', severity: 'Medium', time: '15 mins ago', status: 'investigating' },
-    { id: 3, location: 'Malleswaram, Dharwad', severity: 'Low', time: '1 hour ago', status: 'resolved' },
+    { id: 3, location: 'Malleswaram, Dharwad', severity: 'Low', time: '1 hour ago', status: 'resolved' }
   ];
 
   const assignedComplaints = complaints.filter(complaint => 
@@ -227,7 +227,7 @@ const SiteEngineerDashboard = () => {
             ))}
           </div>
         </CardContent>
-      )}
+      </Card>
 
       {/* Assigned Complaints */}
       <Card>
@@ -270,7 +270,7 @@ const SiteEngineerDashboard = () => {
             )}
           </div>
         </CardContent>
-      )}
+      </Card>
 
       {/* Assigned Fraud Cases */}
       <Card>
@@ -298,7 +298,7 @@ const SiteEngineerDashboard = () => {
             </div>
           )}
         </CardContent>
-      )}
+      </Card>
     </div>
   );
 };
