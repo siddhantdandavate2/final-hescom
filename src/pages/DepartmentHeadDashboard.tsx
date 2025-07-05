@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   TrendingUp, 
   IndianRupee, 
@@ -7,8 +7,13 @@ import {
   Brain,
   Shield,
   ShieldAlert,
-  ShieldCheck
+  ShieldCheck,
+  Bell,
+  MessageSquare
 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { useRealTimeData } from '@/hooks/useRealTimeData';
 import { useFraudDetection } from '@/hooks/useFraudDetection';
 import { karnatakaZones, generateZoneData } from '@/data/karnatakaData';
@@ -28,10 +33,31 @@ const DepartmentHeadDashboard = () => {
   const [selectedZone, setSelectedZone] = useState('all-zones');
   const [selectedMonth, setSelectedMonth] = useState('current');
   const [selectedView, setSelectedView] = useState('overview');
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [complaints, setComplaints] = useState<any[]>([]);
+  const [feedback, setFeedback] = useState<any[]>([]);
+  
   const kpiData = useRealTimeData();
   const fraudData = useFraudDetection();
   const { t } = useLanguage();
   const { formatCurrency, formatNumber, formatPercentage } = useLocalization();
+
+  useEffect(() => {
+    // Load notifications
+    const storedNotifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+    const deptNotifications = storedNotifications.filter((notif: any) => 
+      notif.targetRoles?.includes('department_head') && notif.unread
+    );
+    setNotifications(deptNotifications);
+
+    // Load complaints
+    const storedComplaints = JSON.parse(localStorage.getItem('complaints') || '[]');
+    setComplaints(storedComplaints);
+
+    // Load feedback
+    const storedFeedback = JSON.parse(localStorage.getItem('feedback') || '[]');
+    setFeedback(storedFeedback);
+  }, []);
 
   const currentZoneData = selectedZone === 'all-zones' ? kpiData : generateZoneData(selectedZone) || kpiData;
 
@@ -41,6 +67,8 @@ const DepartmentHeadDashboard = () => {
       zone: selectedZone,
       kpis: currentZoneData,
       fraudStats: fraudData.stats,
+      complaints: complaints.length,
+      feedback: feedback.length,
       alerts: []
     };
     
@@ -48,13 +76,23 @@ const DepartmentHeadDashboard = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `msefc-fraud-report-${selectedZone}-${new Date().toISOString().split('T')[0]}.json`;
+    link.download = `hescom-report-${selectedZone}-${new Date().toISOString().split('T')[0]}.json`;
     link.click();
     URL.revokeObjectURL(url);
   };
 
   const handleViewFraudDetails = (caseId: string) => {
     console.log('Viewing fraud case details:', caseId);
+  };
+
+  const markNotificationAsRead = (notificationId: string) => {
+    const storedNotifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+    const updatedNotifications = storedNotifications.map((notif: any) => 
+      notif.id === notificationId ? { ...notif, unread: false } : notif
+    );
+    localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+    
+    setNotifications(prev => prev.filter(notif => notif.id !== notificationId));
   };
 
   return (
@@ -68,7 +106,50 @@ const DepartmentHeadDashboard = () => {
         onExportReport={exportReport}
       />
 
-      {/* Enhanced KPIs with Fraud Detection */}
+      {/* New Notifications */}
+      {notifications.length > 0 && (
+        <Card className="border-blue-200 bg-blue-50">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Bell className="h-5 w-5 text-blue-600" />
+              <span>New Notifications</span>
+              <Badge variant="default">{notifications.length}</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {notifications.slice(0, 5).map((notification) => (
+                <div key={notification.id} className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                  <div className="flex items-center space-x-3">
+                    <MessageSquare className="h-5 w-5 text-blue-600" />
+                    <div>
+                      <p className="font-semibold">{notification.title}</p>
+                      <p className="text-sm text-gray-600">{notification.message}</p>
+                      <p className="text-xs text-gray-500">{notification.date} at {notification.time}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {notification.priority && (
+                      <Badge variant={notification.priority === 'High' ? 'destructive' : 'outline'}>
+                        {notification.priority}
+                      </Badge>
+                    )}
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => markNotificationAsRead(notification.id)}
+                    >
+                      Mark Read
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Enhanced KPIs with Fraud Detection and Complaints */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
         <KPICard
           title={t('dashboard.totalTheftCases')}
@@ -85,6 +166,14 @@ const DepartmentHeadDashboard = () => {
           trend="up"
           trendValue={`${fraudData.stats.activeCases} ${t('dashboard.activeCases')}`}
           className="border-l-4 border-l-orange-500"
+        />
+        <KPICard
+          title="Total Complaints"
+          value={formatNumber(complaints.length)}
+          icon={MessageSquare}
+          trend="up"
+          trendValue={`${complaints.filter(c => c.status === 'Pending').length} pending`}
+          className="border-l-4 border-l-blue-500"
         />
         <KPICard
           title={t('dashboard.resolvedCases')}
@@ -111,14 +200,6 @@ const DepartmentHeadDashboard = () => {
           trendValue={t('dashboard.aiEnhanced')}
           className="border-l-4 border-l-purple-500"
           type="percentage"
-        />
-        <KPICard
-          title={t('dashboard.highPriority')}
-          value={formatNumber(fraudData.stats.highSeverityCases)}
-          icon={ShieldAlert}
-          trend="down"
-          trendValue={`2 ${t('dashboard.resolvedToday')}`}
-          className="border-l-4 border-l-red-500"
         />
       </div>
 

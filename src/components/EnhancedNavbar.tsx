@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -15,36 +15,51 @@ import { useLocalization } from '@/utils/localization';
 const EnhancedNavbar = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [lastUpdate] = useState(new Date());
+  const [notifications, setNotifications] = useState<any[]>([]);
   const { currentLanguage, changeLanguage, t, languages } = useLanguage();
   const { user, logout } = useAuth();
   const { formatDate } = useLocalization();
 
-  const notifications = [
-    { 
-      id: 1, 
-      type: 'bill', 
-      title: t('notifications.billDue'), 
-      message: t('bills.billAmount') + ': ₹2,450', 
-      time: '2 hours ago', 
-      unread: true 
-    },
-    { 
-      id: 2, 
-      type: 'complaint', 
-      title: t('notifications.complaintResolved'), 
-      message: t('complaints.complaintId') + ': #C001', 
-      time: '1 day ago', 
-      unread: true 
-    },
-    { 
-      id: 3, 
-      type: 'system', 
-      title: t('notifications.systemMaintenance'), 
-      message: formatDate(new Date('2025-01-20')), 
-      time: '2 days ago', 
-      unread: false 
-    },
-  ];
+  useEffect(() => {
+    // Load notifications based on user role
+    const storedNotifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+    const userNotifications = storedNotifications.filter((notif: any) => 
+      notif.targetRoles?.includes(user?.role) && notif.unread
+    );
+    setNotifications(userNotifications);
+
+    // Also load default notifications
+    const defaultNotifications = [
+      { 
+        id: 'default1', 
+        type: 'bill', 
+        title: t('notifications.billDue'), 
+        message: t('bills.billAmount') + ': ₹2,450', 
+        time: '2 hours ago', 
+        unread: true 
+      },
+      { 
+        id: 'default2', 
+        type: 'complaint', 
+        title: t('notifications.complaintResolved'), 
+        message: t('complaints.complaintId') + ': #C001', 
+        time: '1 day ago', 
+        unread: true 
+      },
+      { 
+        id: 'default3', 
+        type: 'system', 
+        title: t('notifications.systemMaintenance'), 
+        message: formatDate(new Date('2025-01-20')), 
+        time: '2 days ago', 
+        unread: false 
+      },
+    ];
+
+    // Combine user notifications with default ones
+    const allNotifications = [...userNotifications, ...defaultNotifications];
+    setNotifications(allNotifications);
+  }, [user, t, formatDate]);
 
   const unreadCount = notifications.filter(n => n.unread).length;
 
@@ -136,7 +151,7 @@ const EnhancedNavbar = () => {
                     <h3 className="font-semibold text-gray-900">{t('notifications.notifications')}</h3>
                   </div>
                   <div className="max-h-80 overflow-y-auto">
-                    {notifications.map((notification) => (
+                    {notifications.slice(0, 5).map((notification) => (
                       <div
                         key={notification.id}
                         className={`p-4 border-b border-gray-100 hover:bg-gray-50 ${

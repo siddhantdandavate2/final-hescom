@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,9 @@ import {
   MapPin,
   User,
   Shield,
-  ShieldAlert
+  ShieldAlert,
+  Bell,
+  MessageSquare
 } from 'lucide-react';
 import { useRealTimeData } from '@/hooks/useRealTimeData';
 import { useFraudDetection } from '@/hooks/useFraudDetection';
@@ -20,6 +22,21 @@ import FraudDetectionCard from '@/components/FraudDetectionCard';
 const SiteEngineerDashboard = () => {
   const kpiData = useRealTimeData();
   const fraudData = useFraudDetection();
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [complaints, setComplaints] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Load notifications
+    const storedNotifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+    const engineerNotifications = storedNotifications.filter((notif: any) => 
+      notif.targetRoles?.includes('site_engineer') && notif.unread
+    );
+    setNotifications(engineerNotifications);
+
+    // Load complaints
+    const storedComplaints = JSON.parse(localStorage.getItem('complaints') || '[]');
+    setComplaints(storedComplaints);
+  }, []);
 
   const theftAlerts = [
     { id: 1, location: 'Sector 12, Hubli', severity: 'High', time: '2 mins ago', status: 'pending' },
@@ -27,11 +44,9 @@ const SiteEngineerDashboard = () => {
     { id: 3, location: 'Malleswaram, Dharwad', severity: 'Low', time: '1 hour ago', status: 'resolved' },
   ];
 
-  const assignedComplaints = [
-    { id: 'C001', customer: 'Ramesh Kumar', issue: 'Meter Reading Error', priority: 'High', time: '30 mins' },
-    { id: 'C002', customer: 'Priya Sharma', issue: 'Billing Dispute', priority: 'Medium', time: '2 hours' },
-    { id: 'C003', customer: 'Suresh Gowda', issue: 'Connection Issue', priority: 'Low', time: '4 hours' },
-  ];
+  const assignedComplaints = complaints.filter(complaint => 
+    complaint.status === 'Pending' || complaint.status === 'In Progress'
+  ).slice(0, 3);
 
   const handleInvestigateFraud = (caseId: string) => {
     console.log('Investigating fraud case:', caseId);
@@ -43,13 +58,75 @@ const SiteEngineerDashboard = () => {
     // Implementation for viewing detailed case information
   };
 
+  const markNotificationAsRead = (notificationId: string) => {
+    const storedNotifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+    const updatedNotifications = storedNotifications.map((notif: any) => 
+      notif.id === notificationId ? { ...notif, unread: false } : notif
+    );
+    localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+    
+    setNotifications(prev => prev.filter(notif => notif.id !== notificationId));
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 rounded-lg">
-        <h2 className="text-2xl font-bold mb-2">Site Engineer Dashboard</h2>
-        <p className="opacity-90">Real-time monitoring and field operations</p>
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold mb-2">Site Engineer Dashboard</h2>
+            <p className="opacity-90">Real-time monitoring and field operations</p>
+          </div>
+          {notifications.length > 0 && (
+            <Badge variant="secondary" className="bg-white text-red-600">
+              {notifications.length} New Notifications
+            </Badge>
+          )}
+        </div>
       </div>
+
+      {/* New Notifications */}
+      {notifications.length > 0 && (
+        <Card className="border-blue-200 bg-blue-50">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Bell className="h-5 w-5 text-blue-600" />
+              <span>New Notifications</span>
+              <Badge variant="default">{notifications.length}</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {notifications.slice(0, 3).map((notification) => (
+                <div key={notification.id} className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                  <div className="flex items-center space-x-3">
+                    <MessageSquare className="h-5 w-5 text-blue-600" />
+                    <div>
+                      <p className="font-semibold">{notification.title}</p>
+                      <p className="text-sm text-gray-600">{notification.message}</p>
+                      <p className="text-xs text-gray-500">{notification.date} at {notification.time}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {notification.priority && (
+                      <Badge variant={notification.priority === 'High' ? 'destructive' : 'outline'}>
+                        {notification.priority}
+                      </Badge>
+                    )}
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => markNotificationAsRead(notification.id)}
+                    >
+                      Mark Read
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Enhanced KPI Cards with Fraud Detection */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -77,12 +154,12 @@ const SiteEngineerDashboard = () => {
           trendValue="2% this week"
         />
         <KPICard
-          title="Fraud Detection Accuracy"
-          value={`${fraudData.stats.averageConfidenceScore}%`}
-          icon={ShieldAlert}
-          trend="stable"
-          trendValue="AI Enhanced"
-          className="border-l-4 border-l-purple-500"
+          title="New Complaints"
+          value={complaints.filter(c => c.status === 'Pending').length}
+          icon={MessageSquare}
+          trend="up"
+          trendValue={`${notifications.filter(n => n.type === 'complaint').length} today`}
+          className="border-l-4 border-l-blue-500"
         />
       </div>
 
@@ -150,7 +227,50 @@ const SiteEngineerDashboard = () => {
             ))}
           </div>
         </CardContent>
-      </Card>
+      )}
+
+      {/* Assigned Complaints */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <MessageSquare className="h-5 w-5 text-red-600" />
+            <span>Recent Complaints</span>
+            <Badge variant="outline">{assignedComplaints.length} Active</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {assignedComplaints.length > 0 ? (
+              assignedComplaints.map((complaint) => (
+                <div key={complaint.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center space-x-4">
+                    <User className="h-5 w-5 text-red-600" />
+                    <div>
+                      <p className="font-semibold">{complaint.customerName}</p>
+                      <p className="text-sm text-gray-600">{complaint.issue}</p>
+                      <p className="text-xs text-gray-500">Complaint ID: {complaint.id}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant={complaint.priority === 'High' ? 'destructive' : 'outline'}>
+                      {complaint.priority}
+                    </Badge>
+                    <span className="text-sm text-gray-600">{complaint.submittedDate}</span>
+                    <Button size="sm" className="bg-red-600 hover:bg-red-700">
+                      Visit
+                    </Button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>No active complaints assigned</p>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      )}
 
       {/* Assigned Fraud Cases */}
       <Card>
@@ -178,39 +298,7 @@ const SiteEngineerDashboard = () => {
             </div>
           )}
         </CardContent>
-      </Card>
-
-      {/* Assigned Complaints */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Assigned Complaints</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {assignedComplaints.map((complaint) => (
-              <div key={complaint.id} className="flex items-center justify-between p-4 border rounded-lg">
-                <div className="flex items-center space-x-4">
-                  <User className="h-5 w-5 text-red-600" />
-                  <div>
-                    <p className="font-semibold">{complaint.customer}</p>
-                    <p className="text-sm text-gray-600">{complaint.issue}</p>
-                    <p className="text-xs text-gray-500">Complaint ID: {complaint.id}</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Badge variant={complaint.priority === 'High' ? 'destructive' : 'outline'}>
-                    {complaint.priority}
-                  </Badge>
-                  <span className="text-sm text-gray-600">{complaint.time}</span>
-                  <Button size="sm" className="bg-red-600 hover:bg-red-700">
-                    Visit
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      )}
     </div>
   );
 };
