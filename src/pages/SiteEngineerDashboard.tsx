@@ -18,10 +18,12 @@ import { useRealTimeData } from '@/hooks/useRealTimeData';
 import { useFraudDetection } from '@/hooks/useFraudDetection';
 import KPICard from '@/components/KPICard';
 import FraudDetectionCard from '@/components/FraudDetectionCard';
+import { useTicketManagement } from '@/hooks/useTicketManagement';
 
 const SiteEngineerDashboard = () => {
   const kpiData = useRealTimeData();
   const fraudData = useFraudDetection();
+  const ticketManagement = useTicketManagement();
   const [notifications, setNotifications] = useState<any[]>([]);
   const [complaints, setComplaints] = useState<any[]>([]);
 
@@ -67,6 +69,17 @@ const SiteEngineerDashboard = () => {
     
     setNotifications(prev => prev.filter(notif => notif.id !== notificationId));
   };
+
+  // Get escalated and high priority tickets
+  const escalatedTickets = ticketManagement.tickets.filter(ticket => 
+    ticket.status === 'Escalated' || 
+    (ticket.priority === 'High' && ticket.status !== 'Resolved' && ticket.status !== 'Closed')
+  );
+
+  const recentTickets = ticketManagement.tickets
+    .filter(ticket => ticket.status !== 'Closed')
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 5);
 
   return (
     <div className="space-y-6">
@@ -161,7 +174,114 @@ const SiteEngineerDashboard = () => {
           trendValue={`${notifications.filter(n => n.type === 'complaint').length} today`}
           className="border-l-4 border-l-blue-500"
         />
+        <KPICard
+          title="Escalated Tickets"
+          value={escalatedTickets.length}
+          icon={AlertTriangle}
+          trend="up"
+          trendValue={`${ticketManagement.tickets.filter(t => t.status === 'Escalated').length} SLA breached`}
+          className="border-l-4 border-l-red-500"
+        />
+        <KPICard
+          title="Active Tickets"
+          value={ticketManagement.tickets.filter(t => t.status !== 'Closed' && t.status !== 'Resolved').length}
+          icon={MessageSquare}
+          trend="stable"
+          trendValue="assigned to you"
+          className="border-l-4 border-l-blue-500"
+        />
       </div>
+
+      {/* Escalated Tickets Alert */}
+      {escalatedTickets.length > 0 && (
+        <Card className="border-red-200 bg-red-50">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2 text-red-700">
+              <AlertTriangle className="h-5 w-5 animate-pulse" />
+              <span>SLA Breached Tickets - Immediate Action Required</span>
+              <Badge variant="destructive" className="animate-pulse">
+                {escalatedTickets.length} Escalated
+              </Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {escalatedTickets.map((ticket) => (
+                <div key={ticket.id} className="flex items-center justify-between p-3 bg-white rounded-lg border border-red-200">
+                  <div className="flex items-center space-x-3">
+                    <AlertTriangle className="h-5 w-5 text-red-600" />
+                    <div>
+                      <p className="font-semibold text-red-700">#{ticket.ticketNumber}</p>
+                      <p className="text-sm">{ticket.title}</p>
+                      <p className="text-xs text-gray-600">Customer: {ticket.customerName}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="destructive">
+                      {ticket.priority} Priority
+                    </Badge>
+                    <Button size="sm" className="bg-red-600 hover:bg-red-700">
+                      Resolve Now
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Recent Tickets */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <MessageSquare className="h-5 w-5 text-red-600" />
+            <span>Recent Tickets from Your Zone</span>
+            <Badge variant="outline">{recentTickets.length} Active</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {recentTickets.length > 0 ? (
+              recentTickets.map((ticket) => {
+                const slaStatus = ticketManagement.getSLAStatus ? ticketManagement.getSLAStatus(ticket) : { status: 'On Time', percentage: 50 };
+                return (
+                  <div key={ticket.id} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div className="flex items-center space-x-4">
+                      <MessageSquare className="h-5 w-5 text-red-600" />
+                      <div>
+                        <p className="font-semibold">#{ticket.ticketNumber}</p>
+                        <p className="text-sm text-gray-600">{ticket.title}</p>
+                        <p className="text-xs text-gray-500">Customer: {ticket.customerName}</p>
+                        <p className="text-xs text-gray-500">Type: {ticket.type}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="text-right">
+                        <Badge variant={ticket.priority === 'High' ? 'destructive' : 'outline'}>
+                          {ticket.priority}
+                        </Badge>
+                        <Badge variant={slaStatus.status === 'Breached' ? 'destructive' : slaStatus.status === 'At Risk' ? 'secondary' : 'outline'} className="ml-1">
+                          SLA: {slaStatus.status}
+                        </Badge>
+                        <p className="text-xs text-gray-500 mt-1">{new Date(ticket.createdAt).toLocaleDateString()}</p>
+                      </div>
+                      <Button size="sm" className="bg-red-600 hover:bg-red-700">
+                        View
+                      </Button>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>No active tickets in your zone</p>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* High Priority Fraud Cases */}
       {fraudData.highPriorityCases.length > 0 && (

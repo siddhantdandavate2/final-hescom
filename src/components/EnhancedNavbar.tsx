@@ -48,6 +48,22 @@ const EnhancedNavbar = () => {
       },
       { 
         id: 'default3', 
+        type: 'ticket_escalated', 
+        title: 'Ticket Escalated - SLA Breach', 
+        message: 'Ticket #TCKT-2025-0001 requires immediate attention', 
+        time: '30 mins ago', 
+        unread: true 
+      },
+      { 
+        id: 'default4', 
+        type: 'feedback', 
+        title: 'New Feedback Received', 
+        message: 'Customer feedback on service quality', 
+        time: '1 hour ago', 
+        unread: true 
+      },
+      { 
+        id: 'default5', 
         type: 'system', 
         title: t('notifications.systemMaintenance'), 
         message: formatDate(new Date('2025-01-20')), 

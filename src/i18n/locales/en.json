@@ -22,6 +22,8 @@
     "payBill": "Pay Bill",
     "nearestOffice": "Nearest Office",
     "complaints": "Complaint Tracker",
+    "ticketManagement": "Ticket Management",
+    "slaReport": "SLA Report",
     "documents": "Document Vault",
     "solarPump": "Solar Pump Status",
     "usefulLinks": "Useful Links",
@@ -159,6 +161,9 @@
     "paymentReceived": "Payment Received",
     "newMessage": "New Message",
     "fraudAlert": "Fraud Alert"
+    "ticketEscalated": "Ticket Escalated",
+    "ticketResolved": "Ticket Resolved",
+    "newTicket": "New Ticket Submitted"
   },
   "chatbot": {
     "welcome": "Hello! How can I help you today?",

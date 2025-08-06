@@ -22,6 +22,8 @@
     "payBill": "ಬಿಲ್ ಪಾವತಿ",
     "nearestOffice": "ಹತ್ತಿರದ ಕಚೇರಿ",
     "complaints": "ದೂರು ಟ್ರ್ಯಾಕರ್",
+    "ticketManagement": "ಟಿಕೆಟ್ ನಿರ್ವಹಣೆ",
+    "slaReport": "SLA ವರದಿ",
     "documents": "ದಾಖಲೆ ವಾಲ್ಟ್",
     "solarPump": "ಸೌರ ಪಂಪ್ ಸ್ಥಿತಿ",
     "usefulLinks": "ಉಪಯುಕ್ತ ಲಿಂಕ್‌ಗಳು",
@@ -159,6 +161,9 @@
     "paymentReceived": "ಪಾವತಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ",
     "newMessage": "ಹೊಸ ಸಂದೇಶ",
     "fraudAlert": "ವಂಚನೆ ಎಚ್ಚರಿಕೆ"
+    "ticketEscalated": "ಟಿಕೆಟ್ ಎಸ್ಕಲೇಟ್ ಮಾಡಲಾಗಿದೆ",
+    "ticketResolved": "ಟಿಕೆಟ್ ಪರಿಹರಿಸಲಾಗಿದೆ",
+    "newTicket": "ಹೊಸ ಟಿಕೆಟ್ ಸಲ್ಲಿಸಲಾಗಿದೆ"
   },
   "chatbot": {
     "welcome": "ನಮಸ್ಕಾರ! ಇಂದು ನಾನು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",

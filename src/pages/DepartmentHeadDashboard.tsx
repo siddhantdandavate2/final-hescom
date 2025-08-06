@@ -28,6 +28,7 @@ import PerformanceChartsSection from '@/components/dashboard/PerformanceChartsSe
 import CityPerformanceCard from '@/components/dashboard/CityPerformanceCard';
 import RevenueAnalyticsCard from '@/components/dashboard/RevenueAnalyticsCard';
 import AIForecastingCard from '@/components/dashboard/AIForecastingCard';
+import { useTicketManagement } from '@/hooks/useTicketManagement';
 
 const DepartmentHeadDashboard = () => {
   const [selectedZone, setSelectedZone] = useState('all-zones');
@@ -39,6 +40,7 @@ const DepartmentHeadDashboard = () => {
   
   const kpiData = useRealTimeData();
   const fraudData = useFraudDetection();
+  const ticketManagement = useTicketManagement();
   const { t } = useLanguage();
   const { formatCurrency, formatNumber, formatPercentage } = useLocalization();
 
@@ -95,6 +97,27 @@ const DepartmentHeadDashboard = () => {
     setNotifications(prev => prev.filter(notif => notif.id !== notificationId));
   };
 
+  // Get escalated tickets requiring approval
+  const escalatedTickets = ticketManagement.tickets.filter(ticket => 
+    ticket.status === 'Escalated'
+  );
+
+  const handleApproveTicket = (ticketId: string) => {
+    ticketManagement.updateTicketStatus(ticketId, 'Resolved', 'Approved by Department Head');
+    toast({
+      title: "Ticket Approved",
+      description: "Ticket has been approved and marked as resolved.",
+    });
+  };
+
+  const handleRejectTicket = (ticketId: string) => {
+    ticketManagement.updateTicketStatus(ticketId, 'Open', 'Rejected - requires more work');
+    toast({
+      title: "Ticket Rejected",
+      description: "Ticket has been rejected and sent back for more work.",
+    });
+  };
+
   return (
     <div className="space-y-6">
       {/* Enhanced Header with Filters */}
@@ -149,6 +172,56 @@ const DepartmentHeadDashboard = () => {
         </Card>
       )}
 
+      {/* Escalated Tickets Requiring Approval */}
+      {escalatedTickets.length > 0 && (
+        <Card className="border-red-200 bg-red-50">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2 text-red-700">
+              <ShieldAlert className="h-5 w-5 animate-pulse" />
+              <span>Escalated Tickets - Approval Required</span>
+              <Badge variant="destructive" className="animate-pulse">
+                {escalatedTickets.length} Awaiting Approval
+              </Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {escalatedTickets.map((ticket) => (
+                <div key={ticket.id} className="flex items-center justify-between p-4 bg-white rounded-lg border border-red-200">
+                  <div className="flex items-center space-x-4">
+                    <AlertTriangle className="h-6 w-6 text-red-600" />
+                    <div>
+                      <p className="font-semibold text-red-700">#{ticket.ticketNumber}</p>
+                      <p className="text-sm font-medium">{ticket.title}</p>
+                      <p className="text-sm text-gray-600">Customer: {ticket.customerName}</p>
+                      <p className="text-xs text-gray-500">Type: {ticket.type} | Priority: {ticket.priority}</p>
+                      <p className="text-xs text-red-600">⚠️ SLA Breached - Escalated on {ticket.escalatedAt ? new Date(ticket.escalatedAt).toLocaleDateString() : 'N/A'}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => handleRejectTicket(ticket.id)}
+                      className="border-red-300 text-red-600 hover:bg-red-50"
+                    >
+                      Reject
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      className="bg-green-600 hover:bg-green-700"
+                      onClick={() => handleApproveTicket(ticket.id)}
+                    >
+                      Approve
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Enhanced KPIs with Fraud Detection and Complaints */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
         <KPICard
@@ -174,6 +247,14 @@ const DepartmentHeadDashboard = () => {
           trend="up"
           trendValue={`${complaints.filter(c => c.status === 'Pending').length} pending`}
           className="border-l-4 border-l-blue-500"
+        />
+        <KPICard
+          title="Escalated Tickets"
+          value={formatNumber(escalatedTickets.length)}
+          icon={AlertTriangle}
+          trend="up"
+          trendValue="requiring approval"
+          className="border-l-4 border-l-red-500"
         />
         <KPICard
           title={t('dashboard.resolvedCases')}
