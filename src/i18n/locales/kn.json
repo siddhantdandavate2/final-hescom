@@ -68,7 +68,7 @@
     "resolvedToday": "ಇಂದು ಪರಿಹರಿಸಲಾಗಿದೆ",
     "predictedTheft": "ಅಂದಾಜು ಕಳ್ಳತನ ಪ್ರಕರಣಗಳು",
     "aiForecasting": "AI ಮುನ್ಸೂಚನೆ - ಮುಂದಿನ ೬ ತಿಂಗಳುಗಳು",
-    "currentLanguage": "kn"
+    "currentLanguage": "ಕನ್ನಡ"
   },
   "zones": {
     "bengaluru": "ಬೆಂಗಳೂರು",
@@ -159,11 +159,11 @@
     "complaintResolved": "ದೂರು ಪರಿಹರಿಸಲಾಗಿದೆ",
     "systemMaintenance": "ಸಿಸ್ಟಂ ನಿರ್ವಹಣೆ",
     "paymentReceived": "ಪಾವತಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ",
-    "newMessage": "ಹೊಸ ಸಂದೇಶ",
-    "fraudAlert": "ವಂಚನೆ ಎಚ್ಚರಿಕೆ"
-    "ticketEscalated": "ಟಿಕೆಟ್ ಎಸ್ಕಲೇಟ್ ಮಾಡಲಾಗಿದೆ",
-    "ticketResolved": "ಟಿಕೆಟ್ ಪರಿಹರಿಸಲಾಗಿದೆ",
-    "newTicket": "ಹೊಸ ಟಿಕೆಟ್ ಸಲ್ಲಿಸಲಾಗಿದೆ"
+"newMessage": "ಹೊಸ ಸಂದೇಶ",
+  "fraudAlert": "ವಂಚನೆ ಎಚ್ಚರಿಕೆ",
+  "ticketEscalated": "ಟಿಕೆಟ್ ಎಸ್ಕಲೇಟ್ ಮಾಡಲಾಗಿದೆ",
+  "ticketResolved": "ಟಿಕೆಟ್ ಪರಿಹರಿಸಲಾಗಿದೆ",
+  "newTicket": "ಹೊಸ ಟಿಕೆಟ್ ಸಲ್ಲಿಸಲಾಗಿದೆ"
   },
   "chatbot": {
     "welcome": "ನಮಸ್ಕಾರ! ಇಂದು ನಾನು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",
