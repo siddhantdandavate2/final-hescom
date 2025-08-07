@@ -160,7 +160,7 @@
     "systemMaintenance": "System Maintenance",
     "paymentReceived": "Payment Received",
     "newMessage": "New Message",
-    "fraudAlert": "Fraud Alert"
+    "fraudAlert": "Fraud Alert",
     "ticketEscalated": "Ticket Escalated",
     "ticketResolved": "Ticket Resolved",
     "newTicket": "New Ticket Submitted"
