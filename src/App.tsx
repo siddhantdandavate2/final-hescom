@@ -22,6 +22,8 @@ import EnergyTheft from "./pages/EnergyTheft";
 import Feedback from "./pages/Feedback";
 import FeedbackInbox from "./pages/FeedbackInbox";
 import NotFound from "./pages/NotFound";
+import TicketManagement from "./pages/TicketManagement";
+import SLAReport from "./pages/SLAReport";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +61,8 @@ const AppContent = () => {
         <Route path="/energy-theft" element={<EnergyTheft />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/feedback-inbox" element={<FeedbackInbox />} />
+        <Route path="/tickets" element={<TicketManagement />} />
+        <Route path="/sla-report" element={<SLAReport />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />

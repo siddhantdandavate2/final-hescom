@@ -65,6 +65,7 @@ export function AppSidebar() {
     roles: ['consumer'],
     items: [
       { title: t('payBill'), url: '/pay-bill', icon: CreditCard, roles: ['consumer'] },
+      { title: 'Ticket Management', url: '/tickets', icon: FileText, roles: ['consumer'] },
       { title: t('documentVault'), url: '/documents', icon: Folder, roles: ['consumer'] },
       { title: t('solarPumpStatus'), url: '/solar-pump', icon: Settings, roles: ['consumer'] },
     ]
@@ -76,6 +77,8 @@ export function AppSidebar() {
     items: [
       { title: t('nearestOffice'), url: '/nearest-office', icon: MapPin, roles: ['consumer'] },
       { title: t('complaintTracker'), url: '/complaints', icon: FileText, roles: ['consumer', 'site_engineer', 'department_head'] },
+      { title: 'Ticket Management', url: '/tickets', icon: FileText, roles: ['site_engineer', 'department_head'] },
+      { title: 'SLA Report', url: '/sla-report', icon: FileText, roles: ['site_engineer', 'department_head'] },
       { title: 'Feedback', url: '/feedback', icon: MessageSquare, roles: ['consumer'] },
       { title: 'Feedback Inbox', url: '/feedback-inbox', icon: MessageSquare, roles: ['site_engineer', 'department_head'] },
       { title: t('usefulLinks'), url: '/useful-links', icon: Book, roles: ['consumer'] },

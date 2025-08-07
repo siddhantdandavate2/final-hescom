@@ -8,13 +8,15 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Separator } from '@/components/ui/separator';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider, facebookProvider } from '@/config/firebase';
 
 const LoginForm = () => {
   const [mobile, setMobile] = useState('');
   const [otp, setOtp] = useState('');
   const [showOtp, setShowOtp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, loginWithGoogle, loginWithFacebook } = useAuth();
   const { toast } = useToast();
   const { currentLanguage } = useLanguage();
 
@@ -125,7 +127,7 @@ const LoginForm = () => {
               <Button 
                 variant="outline" 
                 className="w-full"
-                onClick={() => handleSocialLogin('google')}
+                onClick={handleGoogleLogin}
                 disabled={isLoading}
               >
                 <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
@@ -140,7 +142,7 @@ const LoginForm = () => {
               <Button 
                 variant="outline" 
                 className="w-full"
-                onClick={() => handleSocialLogin('facebook')}
+                onClick={handleFacebookLogin}
                 disabled={isLoading}
               >
                 <svg className="w-4 h-4 mr-2" fill="#1877F2" viewBox="0 0 24 24">
@@ -162,33 +164,26 @@ const LoginForm = () => {
     </div>
   );
 
-  const handleSocialLogin = async (provider: 'google' | 'facebook') => {
-    setIsLoading(true);
-    
-    // Simulate social login process
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Mock social login success
-    const socialUser = {
-      id: Date.now().toString(),
-      mobile: '9876543210', // Default to consumer for demo
-      name: provider === 'google' ? 'Google User' : 'Facebook User',
-      role: 'consumer' as const,
-      consumerNumber: 'KA' + Date.now().toString().slice(-10),
-      address: 'Social Login Address, Karnataka',
-      email: provider === 'google' ? 'user@gmail.com' : 'user@facebook.com'
-    };
-    
-    // Store user and login
-    localStorage.setItem('msefc_user', JSON.stringify(socialUser));
-    window.location.reload(); // Refresh to trigger auth context update
-    
-    setIsLoading(false);
-    
-    toast({
-      title: "Social Login Successful",
-      description: `Logged in successfully with ${provider}`,
-    });
+  const handleGoogleLogin = async () => {
+    const success = await loginWithGoogle();
+    if (!success) {
+      toast({
+        title: "Google Login Failed",
+        description: "Please try again or use mobile login.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    const success = await loginWithFacebook();
+    if (!success) {
+      toast({
+        title: "Facebook Login Failed",
+        description: "Please try again or use mobile login.",
+        variant: "destructive"
+      });
+    }
   };
 };
 

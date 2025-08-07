@@ -13,6 +13,7 @@ import {
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocalization } from '@/utils/localization';
+import { useNavigate } from 'react-router-dom';
 
 const usageData = [
   { month: 'Jan', units: 420 },
@@ -26,6 +27,7 @@ const usageData = [
 const ConsumerDashboard = () => {
   const { t } = useLanguage();
   const { formatCurrency, formatNumber } = useLocalization();
+  const navigate = useNavigate();
 
   return (
     <div className="space-y-6">
@@ -37,7 +39,7 @@ const ConsumerDashboard = () => {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/pay-bill')}>
           <CardContent className="p-4 text-center">
             <CreditCard className="h-8 w-8 text-red-600 mx-auto mb-2" />
             <h3 className="font-semibold">{t('navigation.payBill')}</h3>
@@ -45,15 +47,15 @@ const ConsumerDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/tickets')}>
           <CardContent className="p-4 text-center">
             <FileText className="h-8 w-8 text-red-600 mx-auto mb-2" />
-            <h3 className="font-semibold">Submit Reading</h3>
-            <p className="text-sm text-gray-600">Upload meter</p>
+            <h3 className="font-semibold">Raise Ticket</h3>
+            <p className="text-sm text-gray-600">Submit ticket</p>
           </CardContent>
         </Card>
 
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/complaints')}>
           <CardContent className="p-4 text-center">
             <AlertTriangle className="h-8 w-8 text-red-600 mx-auto mb-2" />
             <h3 className="font-semibold">Report Issue</h3>
@@ -61,7 +63,7 @@ const ConsumerDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/tickets')}>
           <CardContent className="p-4 text-center">
             <Calculator className="h-8 w-8 text-red-600 mx-auto mb-2" />
             <h3 className="font-semibold">{t('chatbot.billCalculator')}</h3>

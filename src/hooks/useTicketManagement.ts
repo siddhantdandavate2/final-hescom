@@ -244,10 +244,15 @@ export const useTicketManagement = () => {
   const getTicketsByRole = (role: string, zone?: string) => {
     switch (role) {
       case 'consumer':
-        return tickets.filter(ticket => ticket.customerName === 'Current User'); // In real app, filter by user ID
-      case 'site-engineer':
-        return tickets.filter(ticket => ticket.zone === zone);
-      case 'department-head':
+        return tickets.filter(ticket => ticket.customerName === userName);
+      case 'site_engineer':
+        // Site engineers see all tickets from their zone
+        return tickets.filter(ticket => 
+          ticket.zone === zone || 
+          ticket.zone?.includes('Hubli') || 
+          ticket.zone?.includes('Dharwad')
+        );
+      case 'department_head':
         return tickets;
       default:
         return [];
