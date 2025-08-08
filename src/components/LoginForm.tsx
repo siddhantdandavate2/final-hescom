@@ -56,6 +56,28 @@ const LoginForm = () => {
     setIsLoading(false);
   };
 
+  const handleGoogleLogin = async () => {
+    const success = await loginWithGoogle();
+    if (!success) {
+      toast({
+        title: "Google Login Failed",
+        description: "Please try again or use mobile login.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    const success = await loginWithFacebook();
+    if (!success) {
+      toast({
+        title: "Facebook Login Failed",
+        description: "Please try again or use mobile login.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100 p-4">
       <Card className="w-full max-w-md">
@@ -163,28 +185,6 @@ const LoginForm = () => {
       </Card>
     </div>
   );
-
-  const handleGoogleLogin = async () => {
-    const success = await loginWithGoogle();
-    if (!success) {
-      toast({
-        title: "Google Login Failed",
-        description: "Please try again or use mobile login.",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const handleFacebookLogin = async () => {
-    const success = await loginWithFacebook();
-    if (!success) {
-      toast({
-        title: "Facebook Login Failed",
-        description: "Please try again or use mobile login.",
-        variant: "destructive"
-      });
-    }
-  };
 };
 
 export default LoginForm;
